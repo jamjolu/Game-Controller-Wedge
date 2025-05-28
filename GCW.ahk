@@ -114,8 +114,8 @@ Gui, 2:Add, Button, x670 y10 w50 h30 gsndMsg12, Joy12
 Gui, 2:Add, Button, x730 y10 w50 h30 gshowGCW, GCW
 Gui, 2:Add, Text, x10 y44 w250 h20 vActiveW, Sending to: 
 ; Generated using SmrtGUI Creator 4.0
-Gui, 2:Show, x150 y970 h70 w785, Test Joy Buttons
-Gui, 1:Show, x150 y50 h571 w642, Game Controller Wedge
+Gui, 2:Show, x250 y5 h60 w785, Test Joy Buttons
+Gui, 1:Show, x150 y100 h571 w642, Game Controller Wedge
 
 ; Hotkeys
 CoordMode, Mouse, Screen
@@ -551,7 +551,7 @@ if (inStr(someStr,"{INFO}")) ; get POV value for next profile (0) or next window
 
 showTJB:
 {
-	Gui, 2:Show, x150 y970 h70 w785, Test Joy Buttons
+	Gui, 2:Show, x250 y5 h70 w785, Test Joy Buttons
 	Return
 }
 
