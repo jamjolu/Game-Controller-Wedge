@@ -10,7 +10,7 @@ GCW is based on Autohotkey V1.1. The well known Autohotkey (AHK) scripting tool 
 
 **Please keep all the materials in the GCW folder together - if you don’t, you will experience a ton of error messages**
 
-https://github.com/jamjolu/Game-Controller-Wedge/blob/main/Screenshot%202025-05-13%20151335.png
+![Screenshot 2025-05-13 151335](https://github.com/user-attachments/assets/ad50ef2d-b267-4a7e-9e75-126e0aa6d881)
 
 GCW also includes a window so that you can test or run macros without a game controller. The "Test Joy Buttons" window appears on top of other windows when it is open.
 Refer to GCW_help.pdf for a more complete discussion about GCW and how to use it.
