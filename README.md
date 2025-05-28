@@ -8,4 +8,11 @@ Built in commands allow you to run programs, open folders and known file types, 
 
 GCW is based on Autohotkey V1.1. The well known Autohotkey (AHK) scripting tool offers  means for emulating  keyboard and mouse actions, interacting with windows, and much more. It is frequently used to automate repetitive computer tasks.
 
-Please keep all the materials in the GCW folder together - if you don’t, you will experience a ton of error messages
+**Please keep all the materials in the GCW folder together - if you don’t, you will experience a ton of error messages**
+
+https://github.com/jamjolu/Game-Controller-Wedge/blob/main/Screenshot%202025-05-13%20151335.png
+
+GCW also includes a window so that you can test or run macros without a game controller. The "Test Joy Buttons" window appears on top of other windows when it is open.
+Refer to GCW_help.pdf for a more complete discussion about GCW and how to use it.
+
+GCW is made using AutoHotKey V1.1. The executable GCW.exe was made using AHK2exe.ahk. This executable should be opened in the same folder as the rest of the GCW related files  as it requires gcw.ini, and GCE_help.pdf to work properly without errors. Windows will warn you that the GCW.exe program is suspicious. Please scan it with your preferred malware scanner, or install AutoHotkey V1.1 and run the GCW.ahk script instead.
