@@ -45,18 +45,18 @@ allProfiles = ""
 Gui, 1:font,s10,Bold
 Gui, 1:Color, acdcfa
 Gui, 1:Add, Text, x6 y8 w45 h20 , Btn1:
-Gui, 1:Add, Edit, x130 y0 w490 h30 vMsg1, GC1 - send string{return}
-Gui, 1:Add, Edit, x130 y39 w490 h30 vMsg2, GC2 - send string{return}
-Gui, 1:Add, Edit, x130 y79 w490 h30 vMsg3, GC3 - send string{return}
-Gui, 1:Add, Edit, x130 y119 w490 h30 vMsg4, GC4- send string{return}
-Gui, 1:Add, Edit, x130 y159 w490 h30 vMsg5, GC5 - send string{return}
-Gui, 1:Add, Edit, x130 y199 w490 h30 vMsg6, GC6 - send string{return}
-Gui, 1:Add, Edit, x130 y239 w490 h30 vMsg7, GC7 - send string{return}
-Gui, 1:Add, Edit, x130 y279 w490 h30 vMsg8, GC8 - send string{return}
-Gui, 1:Add, Edit, x130 y319 w490 h30 vMsg9, GC9 - send string{return}
-Gui, 1:Add, Edit, x130 y359 w490 h30 vMsg10, GC10 - send string{return}
-Gui, 1:Add, Edit, x130 y399 w490 h30 vMsg11, GC11 - send string{return}
-Gui, 1:Add, Edit, x130 y439 w490 h30 vMsg12, GC12 - send string{return}
+Gui, 1:Add, Edit, x130 y0 w490 h30 multi vMsg1, GC1 - send string{return}
+Gui, 1:Add, Edit, x130 y39 w490 h30 multi vMsg2, GC2 - send string{return}
+Gui, 1:Add, Edit, x130 y79 w490 h30 multi vMsg3, GC3 - send string{return}
+Gui, 1:Add, Edit, x130 y119 w490 h30 multi vMsg4, GC4- send string{return}
+Gui, 1:Add, Edit, x130 y159 w490 h30 multi vMsg5, GC5 - send string{return}
+Gui, 1:Add, Edit, x130 y199 w490 h30 multi vMsg6, GC6 - send string{return}
+Gui, 1:Add, Edit, x130 y239 w490 h30 multi vMsg7, GC7 - send string{return}
+Gui, 1:Add, Edit, x130 y279 w490 h30 multi vMsg8, GC8 - send string{return}
+Gui, 1:Add, Edit, x130 y319 w490 h30 multi vMsg9, GC9 - send string{return}
+Gui, 1:Add, Edit, x130 y359 w490 h30 multi vMsg10, GC10 - send string{return}
+Gui, 1:Add, Edit, x130 y399 w490 h30 multi vMsg11, GC11 - send string{return}
+Gui, 1:Add, Edit, x130 y439 w490 h30 multi vMsg12, GC12 - send string{return}
 Gui, 1:Add, Text, x6 y45 w40 h20 , Btn2:
 Gui, 1:Add, Text, x6 y85 w40 h20 , Btn3:
 Gui, 1:Add, Text, x6 y125 w40 h20 , Btn4:
@@ -114,8 +114,8 @@ Gui, 2:Add, Button, x670 y10 w50 h30 gsndMsg12, Joy12
 Gui, 2:Add, Button, x730 y10 w50 h30 gshowGCW, GCW
 Gui, 2:Add, Text, x10 y44 w250 h20 vActiveW, Sending to: 
 ; Generated using SmrtGUI Creator 4.0
-Gui, 2:Show, x250 y5 h60 w785, Test Joy Buttons
-Gui, 1:Show, x150 y100 h571 w642, Game Controller Wedge
+Gui, 2:Show, x250 y0 h60 w785, Test Joy Buttons
+Gui, 1:Show, x145 y100 h571 w642, Game Controller Wedge
 
 ; Hotkeys
 CoordMode, Mouse, Screen
@@ -551,7 +551,7 @@ if (inStr(someStr,"{INFO}")) ; get POV value for next profile (0) or next window
 
 showTJB:
 {
-	Gui, 2:Show, x250 y5 h70 w785, Test Joy Buttons
+	Gui, 2:Show, x250 y0 h70 w785, Test Joy Buttons
 	Return
 }
 
