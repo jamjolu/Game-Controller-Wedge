@@ -1,4 +1,4 @@
-![Screenshot 2025-05-31 142228.png]Screenshot 2025-05-31 142228.png
+![Screenshot 2025-05-31 142228.png](https://github.com/jamjolu/Game-Controller-Wedge/blob/main/Screenshot%202025-05-31%20142228.png)
 
 GCW is a **Windows only** tool for creating and executing macros that are triggered by pressing game controller buttons.  It is very much like Joy2Key or XPadder. Type a macro into a text field, and you are ready to try it.
 
