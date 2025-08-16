@@ -117,11 +117,13 @@ Gui, 2:Add, Text, x10 y44 w250 h20 vActiveW, Sending to:
 Gui, 2:Show, x250 y0 h60 w785, Test Joy Buttons
 Gui, 1:Show, x145 y100 h571 w642, Game Controller Wedge
 
-; Hotkeys
+
 CoordMode, Mouse, Screen
 CoordMode, toolTip, Screen
 WinGetTitle, OldTitle, A
-SetTimer, updateActiveWInfo, 250
+SetTimer, updateActiveWInfo, 2500
+SetTitleMatchMode, 2
+gosub, updateActiveWInfo
 gosub, iniSetup
 
 updateActiveWInfo:
@@ -198,6 +200,7 @@ saveAsNewProfile:
 		selectedProfile := newProfileName
 		msgBox, Saving as new %selectedProfile%
 		goSub, iniSave
+		return
 	}
 	
 delProfile:
@@ -205,7 +208,7 @@ delProfile:
 
 		if inStr(selectedProfile, "Game Controller Wedge")
 			{
-				msgBox, Sorry! Profile Game Controller Wedge can not be deleted.
+				msgBox, Sorry! Profile- Game Controller Wedge -can not be deleted.
 				return
 			}
 		msgBox, 36, Delete profile: %selecteProfile%, Are you sure you want to delete profile: %selectedProfile% ?
@@ -216,6 +219,26 @@ delProfile:
 		selectedProfile := "Game Controller Wedge"
 		goSub, iniSetup
 		GuiControl, 1:Choose, selectedProfile, %selectedProfile%				
+		return
+	}
+	
+getProfile(someProfileString)
+	{
+		global selectedProfile
+		global profileList
+		global profileIx
+		Loop, % profileList.Length()
+			{
+				if inStr(someProfileString, profileList[A_Index])
+					{
+						selectedProfile := profileList[A_Index]
+						goSub, iniSetup
+						Sleep, 100
+						GuiControl, 1:Choose, selectedProfile, %selectedProfile%
+						break
+					}
+				
+			}
 		return
 	}
 	
@@ -321,13 +344,9 @@ sndMsg1:
 	{	
 		Gui,1:Submit,NoHide
 		if (Eb1) {
-				if (checkAction(Msg1)) 
-				{
-					return
-				}
 			
-			Send, %Msg1%
-			}
+			parseMsg(Msg1)
+		}
 		Return
 	}
 	
@@ -337,13 +356,10 @@ sndMsg2:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb2) {
-			if (checkAction(Msg2)) 
-				{
-					return
-				}
-			Send, %Msg2%
+			
+			parseMsg(Msg2)
 		}
-	Return
+		Return
 	}
 
 Joy3::
@@ -351,13 +367,10 @@ sndMsg3:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb3) {
-			if (checkAction(Msg3)) 
-				{
-					return
-				}
-			Send, %Msg3%
+			
+			parseMsg(Msg3)
 		}
-	Return
+		Return
 	}
 
 Joy4::
@@ -365,13 +378,10 @@ sndMsg4:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb4) {
-			if (checkAction(Msg4)) 
-				{
-					return
-				}
-			Send, %Msg4%
+			
+			parseMsg(Msg4)
 		}
-	Return
+		Return
 	}
 
 Joy5::
@@ -379,13 +389,10 @@ sndMsg5:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb5) {
-			if (checkAction(Msg5)) 
-				{
-					return
-				}
-			Send, %Msg5%
+			
+			parseMsg(Msg5)
 		}
-	Return
+		Return
 	}
 
 Joy6::
@@ -393,13 +400,10 @@ sndMsg6:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb6) {
-			if (checkAction(Msg6)) 
-				{
-					return
-				}
-			Send, %Msg6%
+			
+			parseMsg(Msg6)
 		}
-	Return
+		Return
 	}
 
 Joy7::
@@ -407,13 +411,10 @@ sndMsg7:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb7) {
-			if (checkAction(Msg7)) 
-				{
-					return
-				}
-			Send, %Msg7%
+			
+			parseMsg(Msg7)
 		}
-	Return
+		Return
 	}
 
 Joy8::
@@ -421,13 +422,10 @@ sndMsg8:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb8) {
-			if (checkAction(Msg8)) 
-				{
-					return
-				}
-			Send, %Msg8%
+			
+			parseMsg(Msg8)
 		}
-	Return
+		Return
 	}
 
 
@@ -436,13 +434,10 @@ sndMsg9:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb9) {
-			if (checkAction(Msg9)) 
-				{
-					return
-				}
-			Send, %Msg9%
+			
+			parseMsg(Msg9)
 		}
-	Return
+		Return
 	}
 
 Joy10::
@@ -450,13 +445,10 @@ sndMsg10:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb10) {
-			if (checkAction(Msg10)) 
-				{
-					return
-				}
-			Send, %Msg10%
+			
+			parseMsg(Msg10)
 		}
-	Return
+		Return
 	}
 	
 Joy11::
@@ -464,11 +456,8 @@ sndMsg11:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb11) {
-			if (checkAction(Msg11)) 
-				{
-					return
-				}
-			Send, %Msg11%
+			
+			parseMsg(Msg11)
 		}
 		Return
 	}
@@ -479,11 +468,7 @@ sndMsg12:
 		Gui,1:Submit,NoHide
 		if (Eb12) {
 			
-			if (checkAction(Msg12)) 
-				{
-					return
-				}
-			Send, %Msg12%
+			parseMsg(Msg12)
 		}
 		Return
 	}
@@ -494,6 +479,22 @@ WinGetActiveTitle() {
 	Return, v
 }
 
+
+parseMsg(someStr)
+{
+	msgStr := someStr
+	loop, parse,msgStr,|
+		{
+			if (checkAction(A_LoopField)) 
+				{
+					
+				} else 
+				{
+					Send, %A_LoopField%
+				}
+		}
+	gosub, updateActiveWInfo
+}
 
 ; These are special commands to run programs, open files, switch windows, switch profiles, list open windows, etc.
 
@@ -540,10 +541,30 @@ if (inStr(someStr,"{NP}")) ; Loads next profile in list of profiles
 			goSub, nextProfile
 			return 1
 		}
-if (inStr(someStr,"{INFO}")) ; get POV value for next profile (0) or next window (9000)
+if (inStr(someStr,"{SLEEP}")) ; Uses AHK sleep command to pause for X milliseconds
+				{
+					sleepStr := strReplace(someStr,"{SLEEP}")
+					sleep, %sleepStr%
+					return 1
+				}
+if (inStr(someStr,"{BEEP}")) ; makes a toot sound
 		{
-			msgBox, %gcPOV%
-			msgBox, %gcName%
+			
+			SoundBeep
+			return 1
+		}
+if (inStr(someStr,"{AW}")) ; Activates the window with any text that follows {WA}in its title
+		{
+			
+			waStr := strReplace(someStr,"{AW}")
+			WinActivate, %waStr%
+			return 1
+		}
+if (inStr(someStr,"{GP}")) ; Gets the named Profile (if it exixts) that follows the {GP} command
+		{
+			
+			getProfileStr := strReplace(someStr,"{GP}")
+			getProfile(getProfileStr)
 			return 1
 		}
 	return 0
@@ -646,7 +667,7 @@ iniSetup: ;retrieve values stored in file gcw.ini - refresh view
 iniSave: ; store values from variables, into file iniF, under header iniH, for each named key.
  {
 	 iniH := selectedProfile
-	 msgBox, saving profile: %iniH%
+	 ;msgBox, saving profile: %iniH%
 	 iniWrite, %Msg1%, %iniF%, %iniH%, Msg1
 	 iniWrite, %Msg2%, %iniF%, %iniH%, Msg2
 	 iniWrite, %Msg3%, %iniF%, %iniH%, Msg3
