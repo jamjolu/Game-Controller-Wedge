@@ -4,7 +4,7 @@ GCW is a **Windows only** tool for creating and executing macros that are trigge
 Built in commands allow you to run programs, open folders and known file types, toggle through open windows, change profiles.
 
 **There are now 2 versions of Game Controller Wedge** - One for Joystick/Game Controller 1, and one for Joystick/Game Controller 2 - gcw.exe or gcw.ahk, and gcw2.exe or gcw2.ahk respectively. Both versions are basically identical except that they respond to a controllers that report as #1 or #2 respectively. You can use this Autohotkey script to find out what your controller identifies as: https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest  
-You can use 2 controllers simultaneously as long as you are running GCW and GCW2 with controllers that identify as #1 and #2. Each version of GCW has separate setting files. The different versions present different colored windows blue for GCW and yellow for GCW2. The title bar also has a 1 0r 2 in it to distinguish the two versions.
+You can use 2 controllers simultaneously as long as you are running GCW and GCW2 with controllers that identify as #1 and #2. Each version of GCW has separate setting files. The different versions present different colored windows blue for GCW and yellow for GCW2. The title bar also has a 1 or 2 in it to distinguish the two versions.
 
 You can compose up to 12 macros that you can save as a profile that you name and save. You can create as many profiles as you like. 
 
