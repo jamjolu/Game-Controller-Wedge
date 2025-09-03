@@ -2,12 +2,12 @@
 ; Game Controller Wedge uses game controller buttons to launch macros and special commands.
 ; More details about how it works can be found in the help file, GCW_help.pdf,  found in the same folder as this file.
 ; There are 2 versions of Game Controller Wedge: GCW.ahk and GCW2.ahk. 
-; The first works with controller #1 and the second with controller #2 as identified by the controllerTest.ahk script.
+; The first works with controller #1 and the second with controller #2 as identified by controllerTest.ahk.
 ; ControllerTest.ahk can be found at: https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest 
 ; {Click "show code" link, then click "download" option in the upper right hand corner of the code block) 
 ; Both GCW and GCW2 can be found at: https://github.com/jamjolu/Game-Controller-Wedge 
 ; (Click the green "Code" button, select the "Download ZIP" option)
-iniF := "gcw.ini"
+iniF := "gcw2.ini"
 iniH := "Game Controller Wedge"
 OldTitle = ""
 NewTitle = ""
@@ -50,7 +50,7 @@ eb12 := 1
 allProfiles = ""
 
 Gui, 1:font,s10,Bold
-Gui, 1:Color, acdcfa
+Gui, 1:Color, f5e689
 Gui, 1:Add, Text, x6 y8 w45 h20 , Btn1:
 Gui, 1:Add, Edit, x130 y0 w490 h30 multi vMsg1, GC1 - send string{return}
 Gui, 1:Add, Edit, x130 y39 w490 h30 multi vMsg2, GC2 - send string{return}
@@ -105,7 +105,7 @@ Gui, 1:Add, Button, x530 y530 w100 h30 ggetHelp, About GCW
 
 Gui, 2:+LastFound +AlwaysOnTop +E0x08000000
 Gui, 2:font,s10,Bold
-Gui, 2:Color, 26c8f0
+Gui, 2:Color, f0ce26
 Gui, 2:Add, Button, x10 y10 w50 h30 gsndMsg1, Joy1
 Gui, 2:Add, Button, x70 y10 w50 h30 gsndMsg2, Joy2
 Gui, 2:Add, Button, x130 y10 w50 h30 gsndMsg3, Joy3
@@ -118,12 +118,11 @@ Gui, 2:Add, Button, x490 y10 w50 h30 gsndMsg9, Joy9
 Gui, 2:Add, Button, x550 y10 w50 h30 gsndMsg10, Joy10
 Gui, 2:Add, Button, x610 y10 w50 h30 gsndMsg11, Joy11
 Gui, 2:Add, Button, x670 y10 w50 h30 gsndMsg12, Joy12
-Gui, 2:Add, Button, x730 y10 w50 h30 gshowGCW, GCW
+Gui, 2:Add, Button, x730 y10 w50 h30 gshowGCW, GCW2
 Gui, 2:Add, Text, x10 y44 w250 h20 vActiveW, Sending to: 
 ; Generated using SmrtGUI Creator 4.0
-Gui, 2:Show, x250 y0 h60 w785, 1 - Test Joy Buttons
-Gui, 1:Show, x145 y140 h571 w642, 1 - Game Controller Wedge
-
+Gui, 2:Show, x265 y0 h60 w785, 2 - Test Joy Buttons
+Gui, 1:Show, x165 y140 h571 w642, 2 - Game Controller Wedge
 
 CoordMode, Mouse, Screen
 CoordMode, toolTip, Screen
@@ -282,7 +281,7 @@ updateView:
 		allProfiles := ""
 		profileStr := ""
 		iniRead, allProfiles,%iniF%
-		GuiControl,,selectedProfile,|   ; reset the DropDownList of profiles in gcw.ini
+		GuiControl,,selectedProfile,|   ; reset the DropDownList of profiles in gcw2.ini
 		
 		profileStr := strReplace(allProfiles,"`n","|")
 		profileList := strSplit(profileStr,"|")
@@ -346,7 +345,7 @@ DisableAll:
 	}
 Return
 
-Joy1::
+2Joy1::
 sndMsg1:
 	{	
 		Gui,1:Submit,NoHide
@@ -358,7 +357,7 @@ sndMsg1:
 	}
 	
 
-Joy2::
+2Joy2::
 sndMsg2:
 	{
 		Gui,1:Submit,NoHide
@@ -369,7 +368,7 @@ sndMsg2:
 		Return
 	}
 
-Joy3::
+2Joy3::
 sndMsg3:
 	{
 		Gui,1:Submit,NoHide
@@ -380,7 +379,7 @@ sndMsg3:
 		Return
 	}
 
-Joy4::
+2Joy4::
 sndMsg4:
 	{
 		Gui,1:Submit,NoHide
@@ -391,7 +390,7 @@ sndMsg4:
 		Return
 	}
 
-Joy5::
+2Joy5::
 sndMsg5:
 	{
 		Gui,1:Submit,NoHide
@@ -402,7 +401,7 @@ sndMsg5:
 		Return
 	}
 
-Joy6::
+2Joy6::
 sndMsg6:
 	{
 		Gui,1:Submit,NoHide
@@ -413,7 +412,7 @@ sndMsg6:
 		Return
 	}
 
-Joy7::
+2Joy7::
 sndMsg7:
 	{
 		Gui,1:Submit,NoHide
@@ -424,7 +423,7 @@ sndMsg7:
 		Return
 	}
 
-Joy8::
+2Joy8::
 sndMsg8:
 	{
 		Gui,1:Submit,NoHide
@@ -436,7 +435,7 @@ sndMsg8:
 	}
 
 
-Joy9::
+2Joy9::
 sndMsg9:
 	{
 		Gui,1:Submit,NoHide
@@ -447,7 +446,7 @@ sndMsg9:
 		Return
 	}
 
-Joy10::
+2Joy10::
 sndMsg10:
 	{
 		Gui,1:Submit,NoHide
@@ -458,7 +457,7 @@ sndMsg10:
 		Return
 	}
 	
-Joy11::
+2Joy11::
 sndMsg11: 
 	{
 		Gui,1:Submit,NoHide
@@ -469,7 +468,7 @@ sndMsg11:
 		Return
 	}
 
-Joy12:: 
+2Joy12:: 
 sndMsg12: 
 	{
 		Gui,1:Submit,NoHide
@@ -615,7 +614,7 @@ getOpenWindows:
 showGCW:
 {
 
-	WinActivate, 1 - Game Controller Wedge
+	WinActivate,2 - Game
 	goSub, updateActiveWInfo
 	return
 }
@@ -638,7 +637,7 @@ iniGet(iniKey,inF,inS) ; return a value from file: inF, under header: inS, for k
    }
 }
 
-iniSetup: ;retrieve values stored in file gcw.ini - refresh view
+iniSetup: ;retrieve values stored in file gcw2.ini - refresh view
 {
 	iniH := selectedProfile
 	Msg1 := iniGet("Msg1",iniF,iniH)
