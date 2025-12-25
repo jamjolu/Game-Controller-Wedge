@@ -1,6 +1,6 @@
 #Persistent  ; Keep the script running
 ; Game Controller Wedge uses game controller buttons to launch macros and special commands.
-; More details about how it works can be found in the help file, GCW_help.pdf,  found in the same folder as this file.
+; More details about how it works can be found in the help file, GCW_help.html,  found in the same folder as this file.
 ; There are 2 versions of Game Controller Wedge: GCW.ahk and GCW2.ahk. 
 ; The first works with controller #1 and the second with controller #2 as identified by the controllerTest.ahk script.
 ; ControllerTest.ahk can be found at: https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest 
@@ -21,6 +21,7 @@ profileIx := 1
 newProfileName := ""
 gcName := ""
 gcPOV := -1
+suspended := false
 Msg1 := "message btn1 {return}"
 Msg2 := "message btn2 {return}"
 Msg3 := "message btn3 {return}"
@@ -51,46 +52,35 @@ allProfiles = ""
 
 Gui, 1:font,s10,Bold
 Gui, 1:Color, acdcfa
-Gui, 1:Add, Text, x6 y8 w45 h20 , Btn1:
+
+Gui, 1:Add, CheckBox, x6 y0 w120 h30 vEb1 checked, Enable Button 1
 Gui, 1:Add, Edit, x130 y0 w490 h30 multi vMsg1, GC1 - send string{return}
+Gui, 1:Add, CheckBox, x6 y39 w120 h30 vEb2 checked,Enable Button 2
 Gui, 1:Add, Edit, x130 y39 w490 h30 multi vMsg2, GC2 - send string{return}
+Gui, 1:Add, CheckBox, x6 y79 w120 h30 checked vEb3, Enable Button 3
 Gui, 1:Add, Edit, x130 y79 w490 h30 multi vMsg3, GC3 - send string{return}
+Gui, 1:Add, CheckBox, x6 y119 w120 h30 checked vEb4, Enable Button 4
 Gui, 1:Add, Edit, x130 y119 w490 h30 multi vMsg4, GC4- send string{return}
+Gui, 1:Add, CheckBox, x6 y159 w120 h30 checked vEb5, Enable Button 5
 Gui, 1:Add, Edit, x130 y159 w490 h30 multi vMsg5, GC5 - send string{return}
+Gui, 1:Add, CheckBox, x6 y199 w120 h30 checked vEb6, Enable Button 6
 Gui, 1:Add, Edit, x130 y199 w490 h30 multi vMsg6, GC6 - send string{return}
+Gui, 1:Add, CheckBox, x6 y239 w120 h30 checked vEb7, Enable Button 7
 Gui, 1:Add, Edit, x130 y239 w490 h30 multi vMsg7, GC7 - send string{return}
+Gui, 1:Add, CheckBox, x6 y279 w120 h30 checked vEb8, Enable Button 8
 Gui, 1:Add, Edit, x130 y279 w490 h30 multi vMsg8, GC8 - send string{return}
+Gui, 1:Add, CheckBox, x6 y319 w120 h30 checked vEb9, Enable Button 9
 Gui, 1:Add, Edit, x130 y319 w490 h30 multi vMsg9, GC9 - send string{return}
+Gui, 1:Add, CheckBox, x6 y359 w120 h30 checked vEb10, Enable Button 10
 Gui, 1:Add, Edit, x130 y359 w490 h30 multi vMsg10, GC10 - send string{return}
+Gui, 1:Add, CheckBox, x6 y399 w120 h30 checked vEb11, Enable Button 11
 Gui, 1:Add, Edit, x130 y399 w490 h30 multi vMsg11, GC11 - send string{return}
+Gui, 1:Add, CheckBox, x6 y439 w120 h30 checked vEb12, Enable Button 12
 Gui, 1:Add, Edit, x130 y439 w490 h30 multi vMsg12, GC12 - send string{return}
-Gui, 1:Add, Text, x6 y45 w40 h20 , Btn2:
-Gui, 1:Add, Text, x6 y85 w40 h20 , Btn3:
-Gui, 1:Add, Text, x6 y125 w40 h20 , Btn4:
-Gui, 1:Add, Text, x6 y165 w40 h20 , Btn5:
-Gui, 1:Add, Text, x6 y205 w40 h20 , Btn6:
-Gui, 1:Add, Text, x6 y245 w40 h20 , Btn7:
-Gui, 1:Add, Text, x6 y285 w40 h20 , Btn8:
-Gui, 1:Add, Text, x6 y325 w40 h20 , Btn9:
-Gui, 1:Add, Text, x6 y365 w40 h20 , Btn10:
-Gui, 1:Add, Text, x6 y405 w40 h20 , Btn11:
-Gui, 1:Add, Text, x6 y445 w40 h20 , Btn12:
+
 Gui, 1:Add, Text, x6 y485 w520 h20 , Using Profile: 
 Gui, 1:Add, Text, x6 y505 w250 h20 vGCsendsTo, Sending To:
 Gui, 1:Add, DropDownList, x90 y479 w530 gnewProfile vselectedProfile, %selectedProfile%||%profileStr%
-
-Gui, 1:Add, CheckBox, x60 y0 w60 h30 vEb1 checked, Enable
-Gui, 1:Add, CheckBox, x60 y39 w60 h30 vEb2 checked,Enable
-Gui, 1:Add, CheckBox, x60 y79 w60 h30 checked vEb3, Enable
-Gui, 1:Add, CheckBox, x60 y119 w60 h30 checked vEb4, Enable
-Gui, 1:Add, CheckBox, x60 y159 w60 h30 checked vEb5, Enable
-Gui, 1:Add, CheckBox, x60 y199 w60 h30 checked vEb6, Enable
-Gui, 1:Add, CheckBox, x60 y239 w60 h30 checked vEb7, Enable
-Gui, 1:Add, CheckBox, x60 y279 w60 h30 checked vEb8, Enable
-Gui, 1:Add, CheckBox, x60 y319 w60 h30 checked vEb9, Enable
-Gui, 1:Add, CheckBox, x60 y359 w60 h30 checked vEb10, Enable
-Gui, 1:Add, CheckBox, x60 y399 w60 h30 checked vEb11, Enable
-Gui, 1:Add, CheckBox, x60 y439 w60 h30 checked vEb12, Enable
 Gui, 1:Add, Button, x5 y530 w100 h30 gEnableAll, Enable All
 Gui, 1:Add, Button, x110 y530 w100 h30 gDisableAll, Disable All
 Gui, 1:Add, Button, x215 y530 w100 h30 gsaveProfile, Save Profile
@@ -322,7 +312,7 @@ nextProfile:
 	
 getHelp:
 	{
-		run, GCW_help.pdf
+		run, GCW_help.html
 		return
 	}
 
@@ -348,7 +338,8 @@ Return
 
 Joy1::
 sndMsg1:
-	{	
+	{
+		
 		Gui,1:Submit,NoHide
 		if (Eb1) {
 			
@@ -469,8 +460,9 @@ sndMsg11:
 		Return
 	}
 
-Joy12:: 
-sndMsg12: 
+ Joy12::
+sndMsg12:
+ 
 	{
 		Gui,1:Submit,NoHide
 		if (Eb12) {
@@ -489,16 +481,26 @@ WinGetActiveTitle() {
 
 parseMsg(someStr)
 {
+	global suspended
 	msgStr := someStr
 	loop, parse,msgStr,|
 		{
 			if (checkAction(A_LoopField)) 
 				{
 					
-				} else 
+				} 
+			else 
 				{
-					Send, %A_LoopField%
+					 
+					{
+						Send, %A_LoopField%
+					}
 				}
+		}
+	if (suspended)
+		{
+			suspended := false
+			Suspend, Off
 		}
 	gosub, updateActiveWInfo
 }
@@ -508,7 +510,14 @@ parseMsg(someStr)
 checkAction(someStr) {
 global selectedProfile
 global profileStr
+global suspended
 
+if (inStr(someStr,"{S}")) ; Suspend any other hotkeys until this command sequence is completely processed
+		{
+			suspended := true
+			Suspend, On
+			return 1
+		}
 if (inStr(someStr,"{R}")) ; Uses AHK run command to open applications, filetypes with associated apps
 				{
 					runStr := strReplace(someStr,"{R}")
