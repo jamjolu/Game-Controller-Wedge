@@ -1,3 +1,4 @@
+<img width="963" height="894" alt="image1" src="https://github.com/user-attachments/assets/24485b01-06f5-4aec-8f90-aa33a60ddb0a" />
 ![[Screenshot 2025-05-31 142228.png](https://github.com/jamjolu/Game-Controller-Wedge/blob/main/Screenshot%202025-05-31%20142228.png)](https://github.com/jamjolu/Game-Controller-Wedge/blob/main/gcw_1_main.png)
 
 GCW is a **Windows only** tool for creating and executing macros that are triggered by pressing game controller buttons.  It is very much like Joy2Key or XPadder. Type a macro into a text field, and you are ready to try it. Macros can send text, issue key sequences like Ctrl-p, perform mouse clicks at coordinates, and more.
@@ -14,7 +15,8 @@ GCW is based on Autohotkey V1.1. The well known Autohotkey (AHK) scripting tool 
 
 Download a zip file with everything you need to run GCW by clicking the green **Code** button on this webpage and selecting the download zip option.
 
-![[Screenshot 2025-05-13 151335](https://github.com/user-attachments/assets/ad50ef2d-b267-4a7e-9e75-126e0aa6d881)](https://github.com/jamjolu/Game-Controller-Wedge/blob/main/gcw_1_test_btns.png)
+<img width="1174" height="127" alt="image4" src="https://github.com/user-attachments/assets/d48edddf-4137-444b-b3de-a2e573398593" />
+
 
 GCW also includes a window so that you can test or run macros without a game controller. The "Test Joy Buttons" window appears on top of other windows when it is open.
 Refer to GCW_help.pdf for a more complete discussion about GCW and how to use it.
