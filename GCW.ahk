@@ -20,7 +20,9 @@ profileStr := ""
 profileIx := 1
 newProfileName := ""
 gcName := ""
-gcPOV := -1
+gcDPad := -997
+DPadmode := 0
+ControllerNumber := 1
 suspended := false
 Msg1 := "message btn1 {return}"
 Msg2 := "message btn2 {return}"
@@ -80,6 +82,7 @@ Gui, 1:Add, Edit, x130 y439 w490 h30 multi vMsg12, GC12 - send string{return}
 
 Gui, 1:Add, Text, x6 y485 w520 h20 , Using Profile: 
 Gui, 1:Add, Text, x6 y505 w250 h20 vGCsendsTo, Sending To:
+Gui, 1:Add, CheckBox, x530 y505 w120 h20 Checked vDPadmode gsetVars, DPad Mode
 Gui, 1:Add, DropDownList, x90 y479 w530 gnewProfile vselectedProfile, %selectedProfile%||%profileStr%
 Gui, 1:Add, Button, x5 y530 w100 h30 gEnableAll, Enable All
 Gui, 1:Add, Button, x110 y530 w100 h30 gDisableAll, Disable All
@@ -109,7 +112,8 @@ Gui, 2:Add, Button, x550 y10 w50 h30 gsndMsg10, Joy10
 Gui, 2:Add, Button, x610 y10 w50 h30 gsndMsg11, Joy11
 Gui, 2:Add, Button, x670 y10 w50 h30 gsndMsg12, Joy12
 Gui, 2:Add, Button, x730 y10 w50 h30 gshowGCW, GCW
-Gui, 2:Add, Text, x10 y44 w250 h20 vActiveW, Sending to: 
+Gui, 2:Add, Text, x10 y44 w250 h20 vActiveW, Sending to:
+Gui, 2:Add, Text, x530 y44 w250 h20 vDPadstate, DPad Hat Status: 
 ; Generated using SmrtGUI Creator 4.0
 Gui, 2:Show, x250 y0 h60 w785, 1 - Test Joy Buttons
 Gui, 1:Show, x145 y140 h571 w642, 1 - Game Controller Wedge
@@ -118,10 +122,12 @@ Gui, 1:Show, x145 y140 h571 w642, 1 - Game Controller Wedge
 CoordMode, Mouse, Screen
 CoordMode, toolTip, Screen
 WinGetTitle, OldTitle, A
-SetTimer, updateActiveWInfo, 2500
+
 SetTitleMatchMode, 2
 gosub, updateActiveWInfo
 gosub, iniSetup
+SetTimer, updateActiveWInfo, 250
+SetTimer, getDPaddata, 100
 
 updateActiveWInfo:
 	{ 
@@ -135,9 +141,55 @@ updateActiveWInfo:
 				GuiControl, 1:Text, GCsendsTo, %ActiveWTxt%
 			}
 		
-		gcPOV := GetKeyState(joyPOV,P)
+		;gcDPad := GetKeyState(joyDPad,P)
 		gcName := GetKeyState(joyName,P)
 		Return
+	}
+; Check the DPad status, activate associate DPad macro only once until DPad press is released.	
+getDPaddata:
+	{		
+		GuiControlGet, DPadmode,,DPadmode
+		if !(DPadmode)
+			{
+				DPadstring = DPad Mode Not Active
+				GuiControl, 2:Text, DPadstate, %DPadstring%
+				return
+			}
+		GetKeyState, gcDPad, %ControllerNumber%joyPOV
+		if (gcDPad > -2) AND (gcDPad < 31501)
+			{
+				DPadstring = DPad Status: %gcDPad%
+			} else
+			{
+				DPadstring = No Controller Present
+			}
+		GuiControl, 2:Text, DPadstate, %DPadstring%
+		if (gcDPad = 0) And (DPpressed = 0) 
+		{
+		 DPpressed = 1
+		 gosub, sndMsg9
+		 
+		}
+		if (gcDPad = 9000) And (DPpressed = 0)  
+		{
+		 DPpressed = 1
+		 gosub, sndMsg10
+		}
+		if (gcDPad = 18000) And (DPpressed = 0)  
+		{
+		 DPpressed = 1
+		 gosub, sndMsg11
+		}
+		if (gcDPad = 27000) And (DPpressed = 0)  
+		{
+		 DPpressed = 1
+		 gosub, sndMsg12
+		}
+		if (gcDPad = -1)
+		{
+			DPpressed = 0
+		}
+	Return	
 	}
 	
 nextWindow:
@@ -242,6 +294,7 @@ getProfile(someProfileString)
 ; get mouse coords --> Alt+m
 !m::	
 	MouseGetPos, m_x, m_y,,
+	clipboard := m_x . "," . m_y
 	tipText :=  "mouse position is " . m_x . " , " . m_y
 	toolTip %tipText%
 return
@@ -262,6 +315,7 @@ getIndex(arr, item) {
 
 updateView:
 	{
+		global DPadmode
 		loop, 12  ; uodate the messages and the enablement of all 12 game controller buttons.
 		{
 			enableX := "Eb" . A_Index
@@ -269,14 +323,17 @@ updateView:
 			GuiControl,1:, %enableX%, % %enableX%
 			GuiControl,1:,%msgX%, % %msgX%
 		}
+		
+		;Gosub, getDPaddata
 		allProfiles := ""
 		profileStr := ""
 		iniRead, allProfiles,%iniF%
-		GuiControl,,selectedProfile,|   ; reset the DropDownList of profiles in gcw.ini
+		GuiControl,,selectedProfile,|   ; reset the DropDownList of profiles in gcw2.ini
 		
 		profileStr := strReplace(allProfiles,"`n","|")
 		profileList := strSplit(profileStr,"|")
 		GuiControl,,selectedProfile, %selectedProfile% || %profileStr%
+		GuiControl,,DPadmode,%DPadmode%
 		Return
 	}
 	
@@ -674,7 +731,7 @@ iniSetup: ;retrieve values stored in file gcw.ini - refresh view
 	Eb10 := iniGet("Eb10",iniF,iniH)
 	Eb11 := iniGet("Eb11",iniF,iniH)
 	Eb12 := iniGet("Eb12",iniF,iniH)
-	
+	DPadmode := iniGet("DPadmode",iniF,iniH)
 	
 	goSub, updateView
 	Return
@@ -708,6 +765,7 @@ iniSave: ; store values from variables, into file iniF, under header iniH, for e
 	 iniWrite, %Eb10%, %iniF%, %iniH%, Eb10
 	 iniWrite, %Eb11%, %iniF%, %iniH%, Eb11
 	 iniWrite, %Eb12%, %iniF%, %iniH%, Eb12
+	 iniWrite, %DPadmode%, %iniF%, %iniH%, DPadmode
 	 
 	 goSub, iniSetup
 	return

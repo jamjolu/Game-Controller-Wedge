@@ -20,7 +20,10 @@ profileStr := ""
 profileIx := 1
 newProfileName := ""
 gcName := ""
-gcPOV := -1
+gcDPad := -997
+DPadmode := 0
+DPpressed := 0
+ControllerNumber := 2
 suspended := false
 Msg1 := "message btn1 {return}"
 Msg2 := "message btn2 {return}"
@@ -80,6 +83,7 @@ Gui, 1:Add, Edit, x130 y439 w490 h30 multi vMsg12, GC12 - send string{return}
 
 Gui, 1:Add, Text, x6 y485 w520 h20 , Using Profile: 
 Gui, 1:Add, Text, x6 y505 w250 h20 vGCsendsTo, Sending To:
+Gui, 1:Add, CheckBox, x530 y505 w120 h20 Checked vDPadmode gsetVars, DPad Mode
 Gui, 1:Add, DropDownList, x90 y479 w530 gnewProfile vselectedProfile, %selectedProfile%||%profileStr%
 
 Gui, 1:Add, Button, x5 y530 w100 h30 gEnableAll, Enable All
@@ -92,7 +96,6 @@ Gui, 1:Add, Button, x530 y530 w100 h30 ggetHelp, About GCW
 
  
 ; Generated using SmartGUI Creator 4.0
-
 
 Gui, 2:+LastFound +AlwaysOnTop +E0x08000000
 Gui, 2:font,s10,Bold
@@ -111,6 +114,7 @@ Gui, 2:Add, Button, x610 y10 w50 h30 gsndMsg11, Joy11
 Gui, 2:Add, Button, x670 y10 w50 h30 gsndMsg12, Joy12
 Gui, 2:Add, Button, x730 y10 w50 h30 gshowGCW, GCW2
 Gui, 2:Add, Text, x10 y44 w250 h20 vActiveW, Sending to: 
+Gui, 2:Add, Text, x530 y44 w250 h20 vDPadstate, DPad Hat Status:
 ; Generated using SmrtGUI Creator 4.0
 Gui, 2:Show, x265 y0 h60 w785, 2 - Test Joy Buttons
 Gui, 1:Show, x165 y140 h571 w642, 2 - Game Controller Wedge
@@ -118,26 +122,79 @@ Gui, 1:Show, x165 y140 h571 w642, 2 - Game Controller Wedge
 CoordMode, Mouse, Screen
 CoordMode, toolTip, Screen
 WinGetTitle, OldTitle, A
-SetTimer, updateActiveWInfo, 2500
+
 SetTitleMatchMode, 2
 gosub, updateActiveWInfo
 gosub, iniSetup
+SetTimer, updateActiveWInfo, 250
+SetTimer, getDPaddata, 100
 
 updateActiveWInfo:
 	{ 
 		Global OldTitle
 		WinGetActiveTitle, NewTitle
 		ActiveWTxt = Sending to: %NewTitle%
+		
 		if ( NewTitle != OldTitle)
 			{
 				OldTitle = NewTitle
 				GuiControl, 2:Text, ActiveW, %ActiveWTxt%
 				GuiControl, 1:Text, GCsendsTo, %ActiveWTxt%
+				
+				
+				
 			}
 		
-		gcPOV := GetKeyState(joyPOV,P)
+		;gcDPad := GetKeyState(2joyPOV,P)
 		gcName := GetKeyState(joyName,P)
 		Return
+	}
+
+; Check the DPad status, activate associate DPad macro only once until DPad press is released.	
+getDPaddata:
+	{		
+		GuiControlGet, DPadmode,,DPadmode
+		if !(DPadmode)
+			{
+				DPadstring = DPad Mode Not Active
+				GuiControl, 2:Text, DPadstate, %DPadstring%
+				return
+			}
+		GetKeyState, gcDPad, %ControllerNumber%joyPOV
+		if (gcDPad > -2) AND (gcDPad < 31501)
+			{
+				DPadstring = DPad Status: %gcDPad%
+			} else
+			{
+				DPadstring = No Controller Present
+			}
+		GuiControl, 2:Text, DPadstate, %DPadstring%
+		if (gcDPad = 0) And (DPpressed = 0) 
+		{
+		 DPpressed = 1
+		 gosub, sndMsg9
+		 
+		}
+		if (gcDPad = 9000) And (DPpressed = 0)  
+		{
+		 DPpressed = 1
+		 gosub, sndMsg10
+		}
+		if (gcDPad = 18000) And (DPpressed = 0)  
+		{
+		 DPpressed = 1
+		 gosub, sndMsg11
+		}
+		if (gcDPad = 27000) And (DPpressed = 0)  
+		{
+		 DPpressed = 1
+		 gosub, sndMsg12
+		}
+		if (gcDPad = -1)
+		{
+			DPpressed = 0
+		}
+	Return	
 	}
 	
 nextWindow:
@@ -158,7 +215,8 @@ nextWindow:
 	}
 
 setVars:
-		{			
+		{	
+			
 			Gui, Submit, NoHide
 			return
 		}
@@ -239,9 +297,10 @@ getProfile(someProfileString)
 		return
 	}
 	
-; get mouse coords --> Alt+m
+; get mouse coords in clipbard and show them in tooltip --> Alt+m
 !m::	
 	MouseGetPos, m_x, m_y,,
+	clipboard := m_x . "," . m_y
 	tipText :=  "mouse position is " . m_x . " , " . m_y
 	toolTip %tipText%
 return
@@ -262,6 +321,7 @@ getIndex(arr, item) {
 
 updateView:
 	{
+		global DPadmode
 		loop, 12  ; uodate the messages and the enablement of all 12 game controller buttons.
 		{
 			enableX := "Eb" . A_Index
@@ -269,6 +329,8 @@ updateView:
 			GuiControl,1:, %enableX%, % %enableX%
 			GuiControl,1:,%msgX%, % %msgX%
 		}
+		
+		;Gosub, getDPaddata
 		allProfiles := ""
 		profileStr := ""
 		iniRead, allProfiles,%iniF%
@@ -277,6 +339,7 @@ updateView:
 		profileStr := strReplace(allProfiles,"`n","|")
 		profileList := strSplit(profileStr,"|")
 		GuiControl,,selectedProfile, %selectedProfile% || %profileStr%
+		GuiControl,,DPadmode,%DPadmode%
 		Return
 	}
 	
@@ -504,6 +567,7 @@ parseMsg(someStr)
 checkAction(someStr) {
 global selectedProfile
 global profileStr
+global suspended
 
 if (inStr(someStr,"{S}")) ; Suspend any other hotkeys until this command sequence is completely processed
 		{
@@ -617,7 +681,7 @@ getOpenWindows:
 showGCW:
 {
 
-	WinActivate,2 - Game
+	WinActivate,2 - Game Controller Wedge
 	goSub, updateActiveWInfo
 	return
 }
@@ -667,7 +731,7 @@ iniSetup: ;retrieve values stored in file gcw2.ini - refresh view
 	Eb10 := iniGet("Eb10",iniF,iniH)
 	Eb11 := iniGet("Eb11",iniF,iniH)
 	Eb12 := iniGet("Eb12",iniF,iniH)
-	
+	DPadmode := iniGet("DPadmode",iniF,iniH)
 	
 	goSub, updateView
 	Return
@@ -701,6 +765,7 @@ iniSave: ; store values from variables, into file iniF, under header iniH, for e
 	 iniWrite, %Eb10%, %iniF%, %iniH%, Eb10
 	 iniWrite, %Eb11%, %iniF%, %iniH%, Eb11
 	 iniWrite, %Eb12%, %iniF%, %iniH%, Eb12
+	 iniWrite, %DPadmode%, %iniF%, %iniH%, DPadmode
 	 
 	 goSub, iniSetup
 	return
