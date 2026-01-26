@@ -16,12 +16,14 @@ openWinIx := 1
 winList := []
 profileList := []
 selectedProfile := "Game Controller Wedge"
+previousProfile := selectedProfile
 profileStr := ""
 profileIx := 1
 newProfileName := ""
 gcName := ""
 gcDPad := -997
 DPadmode := 0
+DPpressed := 0
 ControllerNumber := 1
 suspended := false
 Msg1 := "message btn1 {return}"
@@ -229,8 +231,10 @@ saveProfile:
 		msgBox, 36, Saving Profile: %selectedProfile%, Do you want to save: %selectedProfile%
 		ifMsgBox, No 
 			return
+		saved := true
 		goSub, setVars
 		goSub, iniSave
+		Reload	
 		Return
 		
 	}
@@ -248,7 +252,9 @@ saveAsNewProfile:
 		
 		selectedProfile := newProfileName
 		msgBox, Saving as new %selectedProfile%
+		saved := true
 		goSub, iniSave
+		Reload
 		return
 	}
 	
@@ -281,6 +287,7 @@ getProfile(someProfileString)
 				if inStr(someProfileString, profileList[A_Index])
 					{
 						selectedProfile := profileList[A_Index]
+						profileIx := A_Index
 						goSub, iniSetup
 						Sleep, 100
 						GuiControl, 1:Choose, selectedProfile, %selectedProfile%
@@ -359,8 +366,7 @@ nextProfile:
 				profileIx := 1
 			}
 		selectedProfile := profileList[profileIx]
-		goSub, iniSetup
-		
+		goSub, iniSetup	
 		sleep, 100
 		GuiControl, 1:Choose, selectedProfile, %selectedProfile%
 		
@@ -395,8 +401,7 @@ Return
 
 Joy1::
 sndMsg1:
-	{
-		
+	{		
 		Gui,1:Submit,NoHide
 		if (Eb1) {
 			
@@ -519,7 +524,6 @@ sndMsg11:
 
  Joy12::
 sndMsg12:
- 
 	{
 		Gui,1:Submit,NoHide
 		if (Eb12) {
@@ -545,13 +549,9 @@ parseMsg(someStr)
 			if (checkAction(A_LoopField)) 
 				{
 					
-				} 
-			else 
+				} else 			 
 				{
-					 
-					{
-						Send, %A_LoopField%
-					}
+					Send, %A_LoopField%
 				}
 		}
 	if (suspended)
@@ -568,6 +568,7 @@ checkAction(someStr) {
 global selectedProfile
 global profileStr
 global suspended
+global previousProfile
 
 if (inStr(someStr,"{S}")) ; Suspend any other hotkeys until this command sequence is completely processed
 		{
@@ -610,7 +611,7 @@ if (inStr(someStr,"{LP}")) ; Shows list of all profiles
 		}
 if (inStr(someStr,"{NP}")) ; Loads next profile in list of profiles
 		{
-			
+			previousProfile := selectedProfile
 			goSub, nextProfile
 			return 1
 		}
@@ -635,9 +636,23 @@ if (inStr(someStr,"{AW}")) ; Activates the window with any text that follows {WA
 		}
 if (inStr(someStr,"{GP}")) ; Gets the named Profile (if it exixts) that follows the {GP} command
 		{
-			
+			previousProfile := selectedProfile
 			getProfileStr := strReplace(someStr,"{GP}")
 			getProfile(getProfileStr)
+			return 1
+		}
+if (inStr(someStr,"{Home}")) ; Go to the Game Controller Wedge profile
+		{
+			previousProfile := selectedProfile
+			getProfileStr := "Game Controller Wedge"
+			getProfile(getProfileStr)
+			return 1
+		}
+if (inStr(someStr,"{PP}")) ; Go to the Previous profile
+		{
+			tmpProfile := selectedProfile
+			getProfile(previousProfile)
+			previousProfile := tmpProfile
 			return 1
 		}
 	return 0

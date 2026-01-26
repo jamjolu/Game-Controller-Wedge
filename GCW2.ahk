@@ -16,6 +16,7 @@ openWinIx := 1
 winList := []
 profileList := []
 selectedProfile := "Game Controller Wedge"
+previousProfile := selectedProfile
 profileStr := ""
 profileIx := 1
 newProfileName := ""
@@ -25,6 +26,7 @@ DPadmode := 0
 DPpressed := 0
 ControllerNumber := 2
 suspended := false
+saved := false
 Msg1 := "message btn1 {return}"
 Msg2 := "message btn2 {return}"
 Msg3 := "message btn3 {return}"
@@ -133,23 +135,18 @@ updateActiveWInfo:
 	{ 
 		Global OldTitle
 		WinGetActiveTitle, NewTitle
-		ActiveWTxt = Sending to: %NewTitle%
-		
+		ActiveWTxt = Sending to: %NewTitle%		
 		if ( NewTitle != OldTitle)
 			{
 				OldTitle = NewTitle
 				GuiControl, 2:Text, ActiveW, %ActiveWTxt%
 				GuiControl, 1:Text, GCsendsTo, %ActiveWTxt%
-				
-				
-				
 			}
 		
 		;gcDPad := GetKeyState(2joyPOV,P)
 		gcName := GetKeyState(joyName,P)
 		Return
 	}
-
 ; Check the DPad status, activate associate DPad macro only once until DPad press is released.	
 getDPaddata:
 	{		
@@ -216,7 +213,6 @@ nextWindow:
 
 setVars:
 		{	
-			
 			Gui, Submit, NoHide
 			return
 		}
@@ -235,8 +231,10 @@ saveProfile:
 		msgBox, 36, Saving Profile: %selectedProfile%, Do you want to save: %selectedProfile%
 		ifMsgBox, No 
 			return
+		saved := true
 		goSub, setVars
 		goSub, iniSave
+		Reload
 		Return
 		
 	}
@@ -254,7 +252,9 @@ saveAsNewProfile:
 		
 		selectedProfile := newProfileName
 		msgBox, Saving as new %selectedProfile%
+		saved := true
 		goSub, iniSave
+		Reload
 		return
 	}
 	
@@ -287,6 +287,7 @@ getProfile(someProfileString)
 				if inStr(someProfileString, profileList[A_Index])
 					{
 						selectedProfile := profileList[A_Index]
+						profileIx := A_Index
 						goSub, iniSetup
 						Sleep, 100
 						GuiControl, 1:Choose, selectedProfile, %selectedProfile%
@@ -363,10 +364,9 @@ nextProfile:
 		if (profileIx > profileList.Length())
 			{
 				profileIx := 1
-			}
+			}	
 		selectedProfile := profileList[profileIx]
 		goSub, iniSetup
-		
 		sleep, 100
 		GuiControl, 1:Choose, selectedProfile, %selectedProfile%
 		
@@ -568,6 +568,7 @@ checkAction(someStr) {
 global selectedProfile
 global profileStr
 global suspended
+global previousProfile
 
 if (inStr(someStr,"{S}")) ; Suspend any other hotkeys until this command sequence is completely processed
 		{
@@ -610,7 +611,7 @@ if (inStr(someStr,"{LP}")) ; Shows list of all profiles
 		}
 if (inStr(someStr,"{NP}")) ; Loads next profile in list of profiles
 		{
-			
+			previousProfile := selectedProfile
 			goSub, nextProfile
 			return 1
 		}
@@ -635,10 +636,23 @@ if (inStr(someStr,"{AW}")) ; Activates the window with any text that follows {WA
 		}
 if (inStr(someStr,"{GP}")) ; Gets the named Profile (if it exixts) that follows the {GP} command
 		{
-			
+			previousProfile := selectedProfile
 			getProfileStr := strReplace(someStr,"{GP}")
 			getProfile(getProfileStr)
 			return 1
+		}
+if (inStr(someStr,"{Home}")) ; Goes to the default Game Controller Wedge profile
+		{
+			previousProfile := selectedProfile
+			getProfileStr := "Game Controller Wedge"
+			getProfile(getProfileStr)
+			return 1
+		}		
+if (inStr(someStr,"{PP}")) ; loads the previous profile
+		{
+			tmpProfile := selectedProfile
+			getProfile(previousProfile)
+			previousProfile := tmpProfile
 		}
 	return 0
 }
@@ -767,7 +781,7 @@ iniSave: ; store values from variables, into file iniF, under header iniH, for e
 	 iniWrite, %Eb12%, %iniF%, %iniH%, Eb12
 	 iniWrite, %DPadmode%, %iniF%, %iniH%, DPadmode
 	 
-	 goSub, iniSetup
+	goSub, iniSetup			
 	return
 }
 
