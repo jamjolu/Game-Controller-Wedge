@@ -644,8 +644,8 @@ if (inStr(someStr,"{GP}")) ; Gets the named Profile (if it exixts) that follows 
 if (inStr(someStr,"{Home}")) ; Goes to the default Game Controller Wedge profile
 		{
 			previousProfile := selectedProfile
-			getProfileStr := "Game Controller Wedge"
-			getProfile(getProfileStr)
+			selectedProfile := "Game Controller Wedge"
+			getProfile(selectedProfile)
 			return 1
 		}		
 if (inStr(someStr,"{PP}")) ; loads the previous profile
@@ -653,6 +653,7 @@ if (inStr(someStr,"{PP}")) ; loads the previous profile
 			tmpProfile := selectedProfile
 			getProfile(previousProfile)
 			previousProfile := tmpProfile
+			return 1
 		}
 	return 0
 }

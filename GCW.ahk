@@ -644,8 +644,8 @@ if (inStr(someStr,"{GP}")) ; Gets the named Profile (if it exixts) that follows 
 if (inStr(someStr,"{Home}")) ; Go to the Game Controller Wedge profile
 		{
 			previousProfile := selectedProfile
-			getProfileStr := "Game Controller Wedge"
-			getProfile(getProfileStr)
+			selectedProfile := "Game Controller Wedge"
+			getProfile(selectedProfile)
 			return 1
 		}
 if (inStr(someStr,"{PP}")) ; Go to the Previous profile
