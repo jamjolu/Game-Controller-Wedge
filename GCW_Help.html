@@ -307,12 +307,15 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       <br>
       <br>
       Use the insert key to create around a 3 second delay: Now<b>{ins
-        150}</b> Later (There is also a <b>{SLEEP} </b>command covered
-      in the next section.)<br>
+        150}</b> Later (<i><b>Please don't use the Ins key like this</b>,
+        unless you always use an even number</i>. The Ins key toggles
+      between inserting text at the cursor position, versus typing over
+      existing text at the cursor position - which users may find
+      disconcerting. Alternatively, there is&nbsp; a less troublesome <b>{SLEEP}
+      </b>command covered in the next section to introduce delays.)<br>
       <br>
       GCW sends keys faster than you can type, so delays may help a
       program to catch up to your macro.<br>
-      <br>
       <br>
       You can click at particular screen coordinates: <b>{click 150,
         600}</b><br>
@@ -448,14 +451,13 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       <i><b>Add a comment to your macro!</b></i> - You could combine
       macros as in: <b>^w|</b><b>{--Close browser tab}</b> This macro
       closes the current browser tab and is followed by a pseudo command
-      that acts as a comment. In this case, pseudo command is ignored
-      because it is not a known special command, special character, or
-      special modifier. The double minus sign is not used in special
-      commands and acts as a visual cue.<br>
+      that acts as a comment. In this case, the pseudo command is
+      ignored because it is not a known special command, special
+      character, or special modifier. The double minus sign is not used
+      in special commands and acts as a visual cue.<br>
       <br>
       <br>
       <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
-      <br>
       <br>
       <br>
       <h3><b><a name="Limitations__Contact"></a>Limitations / Contact</b></h3>
