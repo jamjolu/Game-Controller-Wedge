@@ -268,7 +268,7 @@ delProfile:
 			}
 		msgBox, 36, Delete profile: %selecteProfile%, Are you sure you want to delete profile: %selectedProfile% ?
 		ifMsgBox, No
-			return
+			Return
 		iniDelete, %iniF%, %selectedProfile%
 		Sleep, 100
 		selectedProfile := "Game Controller Wedge"
@@ -544,8 +544,11 @@ parseMsg(someStr)
 {
 	global suspended
 	msgStr := someStr
+	if (suspended == false)
+	{
 	loop, parse,msgStr,|
 		{
+			
 			if (checkAction(A_LoopField)) 
 				{
 					
@@ -554,12 +557,14 @@ parseMsg(someStr)
 					Send, %A_LoopField%
 				}
 		}
+		
 	if (suspended)
 		{
 			suspended := false
 			Suspend, Off
 		}
 	gosub, updateActiveWInfo
+}
 }
 
 ; These are special commands to run programs, open files, switch windows, switch profiles, list open windows, etc.
@@ -638,23 +643,16 @@ if (inStr(someStr,"{GP}")) ; Gets the named Profile (if it exixts) that follows 
 		{
 			previousProfile := selectedProfile
 			getProfileStr := strReplace(someStr,"{GP}")
-			getProfile(getProfileStr)
+			GuiControl, 1:ChooseString, selectedProfile, |%getProfileStr%
 			return 1
 		}
 if (inStr(someStr,"{Home}")) ; Go to the Game Controller Wedge profile
 		{
 			previousProfile := selectedProfile
-			selectedProfile := "Game Controller Wedge"
-			getProfile(selectedProfile)
+			GuiControl, 1:Choose, selectedProfile, |2
 			return 1
 		}
-if (inStr(someStr,"{PP}")) ; Go to the Previous profile
-		{
-			tmpProfile := selectedProfile
-			getProfile(previousProfile)
-			previousProfile := tmpProfile
-			return 1
-		}
+
 	return 0
 }
 

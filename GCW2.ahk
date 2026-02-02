@@ -638,21 +638,20 @@ if (inStr(someStr,"{GP}")) ; Gets the named Profile (if it exixts) that follows 
 		{
 			previousProfile := selectedProfile
 			getProfileStr := strReplace(someStr,"{GP}")
-			getProfile(getProfileStr)
+			GuiControl, 1:ChooseString, selectedProfile, |%getProfileStr%
 			return 1
 		}
 if (inStr(someStr,"{Home}")) ; Goes to the default Game Controller Wedge profile
 		{
 			previousProfile := selectedProfile
-			selectedProfile := "Game Controller Wedge"
-			getProfile(selectedProfile)
+			GuiControl, 1:Choose, selectedProfile, |2
 			return 1
 		}		
-if (inStr(someStr,"{PP}")) ; loads the previous profile
+;if (inStr(someStr,"{PP}")) ; loads the previous profile - not working properly
 		{
-			tmpProfile := selectedProfile
-			getProfile(previousProfile)
-			previousProfile := tmpProfile
+			;tmpProfile := selectedProfile
+			;getProfile(previousProfile)
+			;previousProfile := tmpProfile
 			return 1
 		}
 	return 0
