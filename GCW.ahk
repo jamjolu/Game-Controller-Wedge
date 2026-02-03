@@ -115,7 +115,8 @@ Gui, 2:Add, Button, x610 y10 w50 h30 gsndMsg11, Joy11
 Gui, 2:Add, Button, x670 y10 w50 h30 gsndMsg12, Joy12
 Gui, 2:Add, Button, x730 y10 w50 h30 gshowGCW, GCW
 Gui, 2:Add, Text, x10 y44 w250 h20 vActiveW, Sending to:
-Gui, 2:Add, Text, x530 y44 w250 h20 vDPadstate, DPad Hat Status: 
+Gui, 2:Add, Text, x350 y44 w250 h20 vProfileD, profile:%selectedProfile%
+Gui, 2:Add, Text, x630 y44 w250 h20 vDPadstate, DPad Hat Status: 
 ; Generated using SmrtGUI Creator 4.0
 Gui, 2:Show, x250 y0 h60 w785, 1 - Test Joy Buttons
 Gui, 1:Show, x145 y140 h571 w642, 1 - Game Controller Wedge
@@ -136,10 +137,12 @@ updateActiveWInfo:
 		Global OldTitle
 		WinGetActiveTitle, NewTitle
 		ActiveWTxt = Sending to: %NewTitle%
+		ProfileD = Profile: %selectedProfile%
 		if ( NewTitle != OldTitle)
 			{
 				OldTitle = NewTitle
 				GuiControl, 2:Text, ActiveW, %ActiveWTxt%
+				GuiControl, 2:Text, ProfileD, %ProfileD%
 				GuiControl, 1:Text, GCsendsTo, %ActiveWTxt%
 			}
 		
