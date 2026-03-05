@@ -13,19 +13,21 @@
       <a href="https://github.com/jamjolu/Game-Controller-Wedge">https://github.com/jamjolu/Game-Controller-Wedge</a><br>
       <br>
       <div align="left"> GCW is a tool for creating and executing macros
-        that are triggered by pressing game controller buttons. It is
-        very much like<a href="https://joytokey.net/en/"> Joy2Key</a> or
-        <a href="https://xpadder.com/">XPadder</a>, but it is easier and
+        for Windows computers that are triggered by pressing game
+        controller buttons. It is very much like<a
+          href="https://joytokey.net/en/"> Joy2Key</a> or <a
+          href="https://xpadder.com/">XPadder</a>, but it is easier and
         has very capable macro abilities. With GCW you type a macro into
         a text field, and you are ready to try it.<br>
         <br>
-        Is GCW useful for gamers? Maybe not. I think GCW responds too
-        slowly for many gamers. But, it can do a lot of typing,
-        clicking, program launching (and more) with a single button
-        press which could be valuable to those who wish to minimize the
-        effort to complete repetitive tasks, or as a tool for making
-        activities more accessible and less tiring. It is possible that
-        some gamers may find it useful.<br>
+        Is GCW useful for gamers? I am not so sure. It maybe that GCW
+        responds too slowly for many gamers, and because it a wrapper
+        for AutoHotKey, it could get you banned on gaming sites. But, it
+        can do a lot of typing, clicking, program launching (and more)
+        with a single button press which could be valuable to those who
+        wish to minimize the effort to complete repetitive tasks, or as
+        a tool for making activities more accessible and less tiring. It
+        is possible that some gamers may find it useful.<br>
         <br>
         With GCW you can compose up to 12 macros that you can save as a
         “profile” that you name. You can create as many profiles as you
@@ -37,6 +39,9 @@
         more.<br>
         <br>
         GCW is based on <a href="https://www.autohotkey.com/">Autohotkey
+
+
+
           V1.1</a>. The well known Autohotkey (AHK) scripting tool
         offers means for emulating keyboard and mouse actions,
         interacting with windows, and much more. It is frequently used
@@ -83,6 +88,11 @@
       <br>
       GCW supports up to 12 macros you define which are triggered by
       joystick or gamepad buttons 1 through 12.<br>
+      <b><i>In addition to gamepad buttons, GCW also optionally supports
+          input from a game controller <a
+            href="#More_about_the_GCW_Windows">DPad</a> (see more
+          below), and from the<a href="#More_about_the_GCW_Windows">
+            keyboard </a>(also see more below.)</i></b><br>
       <br>
       <img src="images/image4.png" alt="GCW 1 Test Joy Buttons Window"
         width="869" height="94"><br>
@@ -154,11 +164,26 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
             Wedge profile</li>
           <li> You can select any profile from the <b>Using Profile:</b>&nbsp;
 
+
+
+
             drop down menu, or via the <a href="#GP_">{GP} Special
               Command</a></li>
           <li> The <b>Sending To:</b>&nbsp; label (most times) shows
             the title of the application window that will receive your
             macros</li>
+          <li>The <b>KBD = On</b> (or Off) is a new feature that
+            optionally allows a keyboard to launch macros where keys 1 -
+            9, 0 are the same as Joy buttons 1 - 10, and the PrtScr key
+            = joy button 11, and the Ins key = button 12. This feature
+            may be convenient especially for wireless keyboard users in
+            classrooms settings, but may cause confusion if you forget
+            GCW in keyboard mode is active. The keyboard access option
+            can be turned on/off with the <b>Ctrl-Alt-k</b> key combo.
+            Whenever the keyboard mode changes you will hear a status
+            announcement. The keyboard mode is auto-saved and will
+            persist between GCW sessions.<br>
+          </li>
           <li> <b>About GCW&nbsp; </b>opens this help file</li>
           <li>The <b>GCW </b>button in the Test Joy Buttons window
             brings the main GCW window into the foreground<br>
@@ -172,8 +197,9 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       macro activation options. The “POV hat” as it is shown in the
       Windows Game Controllers control panel is mapped to the D-pad on
       some game controllers.&nbsp; On other gamepads, you may need to
-      activate a special mode to get it to work with GCW. The <b>DPad
-        status</b> is shown in the “Test Joy Buttons” window where:<br>
+      activate a special mode on the game controller itself to get it to
+      work with GCW. The <b>DPad status</b> is shown in the “Test Joy
+      Buttons” window where:<br>
       <br>
       <div align="left">
         <ul>
@@ -183,23 +209,25 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
             but no there is no game controller plugged in that will work
             with this version of GCW.</li>
           <li> <b>DPad Status:</b><b> -1</b> means DPad Mode is
-            checked, and no direction button is pressed.<b>DPad Status:
-              0 </b>means the DPad Mode is checked, and the Up button
-            is pressed.</li>
+            checked, and no direction button is pressed.</li>
+          <li><b>DPad Status: 0 </b>means the DPad Mode is checked, and
+            the DPad Up button is pressed (Joy Button 9.)<br>
+          </li>
           <li> <b>DPad Status: 9000</b> means DPad Mode is checked, and
-            the Right button is pressed.</li>
+            the DPad Right button is pressed (Joy Button 10).</li>
           <li> <b>DPad Status: 18000</b>&nbsp; means DPad Mode is
-            checked, and the Down button is pressed.</li>
+            checked, and the DPad Down button is pressed (Joy Button
+            11.)<br>
+          </li>
           <li> <b>DPad Status: 27000</b> means DPad Mode is checked,
-            and the Left button is pressed.</li>
+            and the DPad Left button is pressed (Joy Button 12.)</li>
         </ul>
       </div>
       GCW responds only to Up, Right, Down and Left. button presses on
       the DPad. Buttons 9, 10, 11 and 12 remain active regardless of
       DPad Mode.<br>
-      <i>If you make a change to your DPad Mode</i><i> setting and you
-        want the change to persist between sessions, make sure to press
-        Save Profile.</i><br>
+      <i>If you make a change to your DPad Mode</i><i> the setting is
+        auto-saved and will persist between sessions.</i><br>
       <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
       <h3><a name="And_now_there_are_2_GCWs:_one_for"></a>And now there
         are 2 GCWs: one for Controller 1, and one for Controller 2</h3>
@@ -244,7 +272,13 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       {left} for left arrow. Or, <b>{F11} </b>for the F11 key. <a
         href="https://www.autohotkey.com/docs/v1/lib/Send.htm#keynames"><b>See
 
+
+
+
           more about including special characters in your macros </b><b>here
+
+
+
 
         </b></a><b><a
           href="https://www.autohotkey.com/docs/v1/lib/Send.htm#keynames">
@@ -253,6 +287,9 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       <br>
       Here is the list of modifier keys: (<a
         href="https://www.autohotkey.com/docs/v1/lib/Send.htm#Parameters"><b>More
+
+
+
           about modifier keys here at the AHK site</b></a>)<br>
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # = Windows
@@ -260,6 +297,9 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ! =
       Alt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
 
 
       <br>
@@ -276,27 +316,31 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       <br>
       <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
       <h3><a name="More_macro_examples"></a>More macro examples</h3>
-      A name and address fill in: <b>Fred{tab}Flintstone{tab}345 Cave
-        Stone Rd.{tab}Bedrock{tab}NY{tab}12345{enter}</b><br>
+      <i><b>With the exception of the {Sleep} command mentioned below,
+          all the examples on this page are carried out by the
+          AutoHotkey <a
+            href="https://www.autohotkey.com/docs/v1/lib/Send.htm">Send
+          </a>command. In GCW the Send command does not require any
+          prefix.<br>
+          <br>
+        </b></i>A name and address fill in: <b>Fred{tab}Flintstone{tab}345
+        Cave Stone Rd.{tab}Bedrock{tab}NY{tab}12345{enter}</b><br>
       <br>
       You can press a special character key multiple times by adding a
       number to the special character:<b> {tab 3}</b> (3 tabs).<br>
       <br>
-      Use the insert key to create around a 3 second delay: Now<b>{ins
-        150}</b> Later (<i><b>Please don't use the Ins key like this</b>,
-        unless you always use an even number</i>. The Ins key toggles
-      between inserting text at the cursor position, versus typing over
-      existing text at the cursor position - which users may find
-      disconcerting. Alternatively, there is&nbsp; a less troublesome <b>{SLEEP}
-      </b>command covered in the next section to introduce delays.)<br>
-      <br>
       GCW sends keys faster than you can type, so delays may help a
-      program to catch up to your macro.<br>
+      program to catch up to your macro, so a <b>{Sleep} </b>command
+      described later in the document can provide a delay to allow the
+      computer to catch up to the macro in progress.<br>
       <br>
       You can click at particular screen coordinates: <b>{click 150,
         600}</b><br>
       <br>
       <a href="https://www.autohotkey.com/docs/v1/lib/Click.htm#Remarks"><b>You
+
+
+
           can do other {click… commands} as well as seen at the AHK
           site.</b></a><br>
       <br>
@@ -310,13 +354,17 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       Select the browser back button: <b>{browser_back}</b><br>
       <br>
       <a href="https://www.autohotkey.com/docs/v1/lib/Send.htm"><b>Again,
+
+
+
           there is much more about what you can send can be found here
           at the AHK site</b></a><br>
       <br>
       <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
       <h3> <a name="Special_Commands"></a>Special Commands</h3>
       In addition to the standard AHK special characters, GCW offers its
-      own special commands.<br>
+      own special commands. These commands always start with the command
+      enclosed in braces like this: <b>{R}</b><br>
       <h4> Aliased AutoHotkey Commands:</h4>
       <div align="left"> <b>{R}</b> - invokes the AHK Run command. The
         {R} command can open websites, programs, known file types and
@@ -325,8 +373,8 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
         <br>
         <b>{SLEEP} </b>- Allows you to pause GCW activity to allow for
         programs to open, and other processes to complete before
-        reactivating GCW to continue sending macro text or commands. To
-        do this, follow the {SLEEP} command with a number representing
+        allowing GCW to continue sending macro text or commands. To do
+        this, follow the {SLEEP} command with a number representing
         milliseconds. So, <b>{SLEEP}5000</b> would pause GCW activities
         for 5 seconds.<br>
         <br>
@@ -376,8 +424,20 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
         <b>{NW} </b>- Brings the next open Windows window into the
         foreground - ready to receive macros. This works, but not always
         in the order you expect or hope for.<br>
+        <h4 align="center">Text to Speech Commands</h4>
       </div>
-      <br>
+      <div align="left"><b>{TTS}</b> - Uses the system text-to-speech
+        service to speak any text that immediately follows the command -
+        like <b>{TTS}Hello, Bob.<br>
+          {TTSC}</b> - Uses system text-to-speech to speak text that was
+        copied to the system clipboard. <br>
+        <b>{TTS+}</b> - Raise the TTS voice volume by 10%<br>
+        <b>{TTS-}</b> - Lower the TTS voice volume by 10%<br>
+        <br>
+        The default system voice with its default settings is used. But,
+        those settings can be adjusted in the Windows Text-to-Speech
+        control panel.<br>
+        <b></b></div>
       <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
       <b> </b>
       <h3> <a name="Combining_Commands_and_Macro_Strings"></a>Combining
@@ -415,9 +475,9 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       <h3><b><a name="Limitations__Contact"></a>Limitations / Contact</b></h3>
       <br>
       GCW and AutoHotkey can emulate keyboard and mouse actions and send
-      them to most active windows, or the Windows operating system. But
-      there are applications that it will not be able to interact with
-      at all, or not very well.<br>
+      them to most active windows, or to the Windows operating system.
+      But there are applications that it will not be able to interact
+      with at all, or not very well.<br>
       <br>
       In particular, in Windows 11 the new Notepad behaves really
       weirdly. If you send text to it from GCW or other AutoHotKey
@@ -433,6 +493,9 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       respond at all while Voice Access was “Listening”. It seems that
       Voice Access will totally preempt GCW (and AutoHotKey). <a
         href="https://www.autohotkey.com/boards/viewtopic.php?t=99531">You
+
+
+
         can find out more at this AutoHotKey community post if you are
         having issues controlling or sending something to a window with
         GCW</a>.<br>
@@ -452,6 +515,9 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
           <li> <b><a
 href="https://www.amazon.com/Ultimate-Wireless-Controller-PC-Joysticks-Remappable/dp/B0DNM3VGGG">8BitDo
 
+
+
+
                 Ultimate 2C Wireless Controller</a> - </b>Many USB
             gamepads available on Amazon will have at least 10 buttons.
             This wireless one looks like it has at least 12 for around
@@ -459,21 +525,33 @@ href="https://www.amazon.com/Ultimate-Wireless-Controller-PC-Joysticks-Remappabl
           <li> <a
 href="https://www.xbox.com/en-US/accessories/controllers/xbox-adaptive-controller"><b>The
 
+
+
+
                 XBox Adaptive Controller</b></a> - 19 - 3.5 mm inputs,
             re-mappable, $100 - Also available at Best Buy, Target…</li>
           <li> <a
 href="https://www.amazon.com/Leverless-Controller-Arcade-Stick-Haute42-All-Button/dp/B0D14L1BQJ"><b>Haute42
+
+
+
 
                 Leverless Controller Arcade Stick</b>,</a> buttons only
             controller, $48, Amazon</li>
           <li> <a
 href="https://www.amazon.com/Bluetooth-Gamepad-Keychain-Controller-Raspberry-Turquoise/dp/B081HML6MP"><b>8Bitdo
 
+
+
+
                 Zero 2 Bluetooth Gamepad Keychain Sized Mini Controller</b>
-            </a> -&nbsp; Has less than 12 buttons, but includes a DPad,
+            </a> -&nbsp; Has less than 12 buttons, includes a DPad,
             wireless, small game controller, $20.</li>
           <li> <b><a
 href="https://www.amazon.com/Buttons-EG-STARTS-Joystick-Raspberry/dp/B01M2X88QP">EG
+
+
+
 
                 Starts DIY Game Controller Kit</a> </b>-Make your own
             arcade style game controller by putting this stuff in some
@@ -495,10 +573,10 @@ href="https://www.amazon.com/Buttons-EG-STARTS-Joystick-Raspberry/dp/B01M2X88QP"
         keyboard type keys for buttons, but no inputs for 3.5mm ability
         switches.<br>
         <br>
-        Item 5 - Carry your game controller in your pocket. It looks
+        Item 4 - Carry your game controller in your pocket. It looks
         like it can support all 12 macro slots in DPad Mode.<br>
         <br>
-        Item 6 -A low cost, DIY option that lets you play with the
+        Item 5 -A low cost, DIY option that lets you play with the
         button layout as you please. It comes with 10 buttons, a USB
         controller board, wires with connectors to connect switches and
         the USB board, and a digital joystick.<br>

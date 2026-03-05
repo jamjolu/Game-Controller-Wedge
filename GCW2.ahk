@@ -2,14 +2,13 @@
 ; Game Controller Wedge uses game controller buttons to launch macros and special commands.
 ; More details about how it works can be found in the help file, GCW_help.html,  found in the same folder as this file.
 ; There are 2 versions of Game Controller Wedge: GCW.ahk and GCW2.ahk. 
-; The first works with controller #1 and the second with controller #2 as identified by controllerTest.ahk.
+; The first works with controller #1 and the second with controller #2 as identified by the controllerTest.ahk script.
 ; ControllerTest.ahk can be found at: https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest 
 ; {Click "show code" link, then click "download" option in the upper right hand corner of the code block) 
 ; Both GCW and GCW2 can be found at: https://github.com/jamjolu/Game-Controller-Wedge 
 ; (Click the green "Code" button, select the "Download ZIP" option)
 iniF := "gcw2.ini"
 iniH := "Game Controller Wedge"
-OldTitle = ""
 NewTitle = ""
 openWinText = ""
 openWinIx := 1
@@ -17,6 +16,8 @@ winList := []
 profileList := []
 selectedProfile := "Game Controller Wedge"
 previousProfile := selectedProfile
+defProf := "Game Controller Wedge"
+lastUsedProf := ""
 profileStr := ""
 profileIx := 1
 newProfileName := ""
@@ -26,7 +27,10 @@ DPadmode := 0
 DPpressed := 0
 ControllerNumber := 2
 suspended := false
-saved := false
+kbd:= false
+ttsVolume := 50
+tts:= ComObjCreate("SAPI.SpVoice")
+tts.Volume := ttsVolume
 Msg1 := "message btn1 {return}"
 Msg2 := "message btn2 {return}"
 Msg3 := "message btn3 {return}"
@@ -85,9 +89,9 @@ Gui, 1:Add, Edit, x130 y439 w490 h30 multi vMsg12, GC12 - send string{return}
 
 Gui, 1:Add, Text, x6 y485 w520 h20 , Using Profile: 
 Gui, 1:Add, Text, x6 y505 w250 h20 vGCsendsTo, Sending To:
-Gui, 1:Add, CheckBox, x530 y505 w120 h20 Checked vDPadmode gsetVars, DPad Mode
+Gui, 1:Add, Text, x320 y505 w80 h20 vkbd, KBD = %kbd%
+Gui, 1:Add, CheckBox, x530 y505 w120 h20 Checked vDPadmode gsetDPadMode, DPad Mode
 Gui, 1:Add, DropDownList, x90 y479 w530 gnewProfile vselectedProfile, %selectedProfile%||%profileStr%
-
 Gui, 1:Add, Button, x5 y530 w100 h30 gEnableAll, Enable All
 Gui, 1:Add, Button, x110 y530 w100 h30 gDisableAll, Disable All
 Gui, 1:Add, Button, x215 y530 w100 h30 gsaveProfile, Save Profile
@@ -98,6 +102,7 @@ Gui, 1:Add, Button, x530 y530 w100 h30 ggetHelp, About GCW
 
  
 ; Generated using SmartGUI Creator 4.0
+
 
 Gui, 2:+LastFound +AlwaysOnTop +E0x08000000
 Gui, 2:font,s10,Bold
@@ -114,39 +119,44 @@ Gui, 2:Add, Button, x490 y10 w50 h30 gsndMsg9, Joy9
 Gui, 2:Add, Button, x550 y10 w50 h30 gsndMsg10, Joy10
 Gui, 2:Add, Button, x610 y10 w50 h30 gsndMsg11, Joy11
 Gui, 2:Add, Button, x670 y10 w50 h30 gsndMsg12, Joy12
-Gui, 2:Add, Button, x730 y10 w50 h30 gshowGCW, GCW2
-Gui, 2:Add, Text, x10 y44 w250 h20 vActiveW, Sending to: 
-Gui, 2:Add, Text, x350 y44 w250 h20 vProfileD, profile:%selectedProfile%
-Gui, 2:Add, Text, x630 y44 w250 h20 vDPadstate, DPad Hat Status:
+Gui, 2:Add, Button, x730 y10 w50 h30 gshowGCW, GCW
+Gui, 2:Add, Text, x10 y44 w250 h20 vActiveW, Sending to:
+Gui, 2:Add, Text, x300 y44 w230 h20 vProfileD, profile:%selectedProfile%
+Gui, 2:Add, Text, x530 y44 w80 h20 vkbd, KBD = %kbd%
+Gui, 2:Add, Text, x630 y44 w250 h20 vDPadstate, DPad Hat Status: 
 ; Generated using SmrtGUI Creator 4.0
-Gui, 2:Show, x265 y0 h60 w785, 2 - Test Joy Buttons
-Gui, 1:Show, x165 y140 h571 w642, 2 - Game Controller Wedge
+Gui, 2:Show, x250 y0 h60 w785, 2 - Test Joy Buttons
+Gui, 1:Show, x145 y140 h571 w642, 2 - Game Controller Wedge
+
 
 CoordMode, Mouse, Screen
 CoordMode, toolTip, Screen
-WinGetTitle, OldTitle, A
-
 SetTitleMatchMode, 2
 gosub, updateActiveWInfo
+selectedProfile := iniGet("lastUsedProf",iniF,defProf)
+kbd:= iniGet("kbd",iniF,defProf)
+DPadmode := iniGet("DPadmode",iniF,defProf)
 gosub, iniSetup
 SetTimer, updateActiveWInfo, 250
 SetTimer, getDPaddata, 100
 
 updateActiveWInfo:
 	{ 
-		Global OldTitle
+		Global selectedProfile
 		WinGetActiveTitle, NewTitle
 		ActiveWTxt = Sending to: %NewTitle%
-ProfileD = Profile: %selectedProfile%		
-		if ( NewTitle != OldTitle)
+		ProfileD = Profile: %selectedProfile%
+		kbdStat = KBD = Off
+		if (kbd)
 			{
-				OldTitle = NewTitle
-				GuiControl, 2:Text, ActiveW, %ActiveWTxt%
-				GuiControl, 2:Text, ProfileD, %ProfileD%
-				GuiControl, 1:Text, GCsendsTo, %ActiveWTxt%
+				kbdStat = KBD = On
 			}
-		
-		;gcDPad := GetKeyState(2joyPOV,P)
+		GuiControl, 2:Text, ActiveW, %ActiveWTxt%
+		GuiControl, 2:Text, ProfileD, %ProfileD%
+		GuiControl, 2:Text, kbd, %kbdStat%
+		GuiControl, 1:Text, GCsendsTo, %ActiveWTxt%
+		GuiControl, 1:Text, kbd, %kbdStat%
+		;gcDPad := GetKeyState(joyDPad,P)
 		gcName := GetKeyState(joyName,P)
 		Return
 	}
@@ -213,9 +223,16 @@ nextWindow:
 		Return
 		
 	}
-
+	
+setDPadMode:
+	{
+		Gui, Submit, NoHide
+		iniWrite, %DPadmode%, %iniF%, %defProf%, DPadmode
+		Return
+	}
+	
 setVars:
-		{	
+		{			
 			Gui, Submit, NoHide
 			return
 		}
@@ -224,10 +241,11 @@ newProfile:
 	{
 		goSub, setVars
 		goSub, iniSetup
-		
+		lastUsedProf := selectedProfile
+		iniWrite, %lastUsedProf%, %iniF%, %defProf%, lastUsedProf
+		Return
 	}
-	Return
-
+	
 
 saveProfile:
 	{
@@ -237,7 +255,7 @@ saveProfile:
 		saved := true
 		goSub, setVars
 		goSub, iniSave
-		Reload
+		Reload	
 		Return
 		
 	}
@@ -271,10 +289,12 @@ delProfile:
 			}
 		msgBox, 36, Delete profile: %selecteProfile%, Are you sure you want to delete profile: %selectedProfile% ?
 		ifMsgBox, No
-			return
+			Return
 		iniDelete, %iniF%, %selectedProfile%
 		Sleep, 100
 		selectedProfile := "Game Controller Wedge"
+		lastUsedProf := "Game Controller Wedge"
+		iniWrite, %lastUsedProf%, %iniF%, %defProf%, lastUsedProf
 		goSub, iniSetup
 		GuiControl, 1:Choose, selectedProfile, %selectedProfile%				
 		return
@@ -301,7 +321,7 @@ getProfile(someProfileString)
 		return
 	}
 	
-; get mouse coords in clipbard and show them in tooltip --> Alt+m
+; get mouse coords --> Alt+m
 !m::	
 	MouseGetPos, m_x, m_y,,
 	clipboard := m_x . "," . m_y
@@ -312,6 +332,19 @@ return
 ; dismiss tootip  --> Ctl+Alt+m
 ^!m::
 	toolTip  
+return
+^!k::
+	kbd := !(kbd)
+	iniWrite, %kbd%, %iniF%, %defProf%, kbd
+	if (kbd)
+		{
+			tts.Speak("keyboard mode on")
+		} 
+		else
+		{
+			tts.Speak("keyboard mode off")
+		}
+	
 return
 
 getIndex(arr, item) {
@@ -367,11 +400,13 @@ nextProfile:
 		if (profileIx > profileList.Length())
 			{
 				profileIx := 1
-			}	
+			}
 		selectedProfile := profileList[profileIx]
-		goSub, iniSetup
+		goSub, iniSetup	
 		sleep, 100
 		GuiControl, 1:Choose, selectedProfile, %selectedProfile%
+		lastUsedProf := selectedProfile
+		iniWrite, %lastUsedProf%, %iniF%, %defProf%, lastUsedProf
 		
 		return
 	}
@@ -402,9 +437,18 @@ DisableAll:
 	}
 Return
 
-2Joy1::
+$1:: 
+	if (kbd) 
+	{
+		
+	} else 
+	{
+		send, 1
+		Return ;do nothing
+	}
+Joy1::
 sndMsg1:
-	{	
+	{		
 		Gui,1:Submit,NoHide
 		if (Eb1) {
 			
@@ -413,8 +457,16 @@ sndMsg1:
 		Return
 	}
 	
-
-2Joy2::
+$2::
+	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, 2
+		Return ;do nothing
+	}
+Joy2::
 sndMsg2:
 	{
 		Gui,1:Submit,NoHide
@@ -424,8 +476,16 @@ sndMsg2:
 		}
 		Return
 	}
-
-2Joy3::
+$3::
+	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, 3
+		Return ;do nothing
+	}
+Joy3::
 sndMsg3:
 	{
 		Gui,1:Submit,NoHide
@@ -435,8 +495,16 @@ sndMsg3:
 		}
 		Return
 	}
-
-2Joy4::
+$4::
+	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, 4
+		Return ;do nothing
+	}
+Joy4::
 sndMsg4:
 	{
 		Gui,1:Submit,NoHide
@@ -446,8 +514,16 @@ sndMsg4:
 		}
 		Return
 	}
-
-2Joy5::
+$5::
+	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, 5
+		Return ;do nothing
+	}
+Joy5::
 sndMsg5:
 	{
 		Gui,1:Submit,NoHide
@@ -457,8 +533,16 @@ sndMsg5:
 		}
 		Return
 	}
-
-2Joy6::
+$6::
+	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, 6
+		Return ;do nothing
+	}
+Joy6::
 sndMsg6:
 	{
 		Gui,1:Submit,NoHide
@@ -468,8 +552,16 @@ sndMsg6:
 		}
 		Return
 	}
-
-2Joy7::
+$7::
+	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, 7
+		Return ;do nothing
+	}
+Joy7::
 sndMsg7:
 	{
 		Gui,1:Submit,NoHide
@@ -479,8 +571,16 @@ sndMsg7:
 		}
 		Return
 	}
-
-2Joy8::
+$8::
+	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, 8
+		Return ;do nothing
+	}
+Joy8::
 sndMsg8:
 	{
 		Gui,1:Submit,NoHide
@@ -491,8 +591,16 @@ sndMsg8:
 		Return
 	}
 
-
-2Joy9::
+$9::
+	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, 9
+		Return ;do nothing
+	}
+Joy9::
 sndMsg9:
 	{
 		Gui,1:Submit,NoHide
@@ -502,8 +610,16 @@ sndMsg9:
 		}
 		Return
 	}
-
-2Joy10::
+$0::
+	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, 0
+		Return ;do nothing
+	}
+Joy10::
 sndMsg10:
 	{
 		Gui,1:Submit,NoHide
@@ -513,8 +629,16 @@ sndMsg10:
 		}
 		Return
 	}
-	
-2Joy11::
+$PrintScreen::
+	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, {Printscreen}
+		Return ;do nothing
+	}	
+Joy11::
 sndMsg11: 
 	{
 		Gui,1:Submit,NoHide
@@ -524,9 +648,17 @@ sndMsg11:
 		}
 		Return
 	}
-
-2Joy12:: 
-sndMsg12: 
+ $Insert::
+ 	if (kbd) 
+	{
+		;just continue
+	} else 
+	{
+		send, {Ins}
+		Return ;do nothing
+	}
+ Joy12::
+sndMsg12:
 	{
 		Gui,1:Submit,NoHide
 		if (Eb12) {
@@ -547,22 +679,27 @@ parseMsg(someStr)
 {
 	global suspended
 	msgStr := someStr
+	if (suspended == false)
+	{
 	loop, parse,msgStr,|
 		{
+			
 			if (checkAction(A_LoopField)) 
 				{
 					
-				} else 
+				} else 			 
 				{
 					Send, %A_LoopField%
 				}
 		}
+		
 	if (suspended)
 		{
 			suspended := false
 			Suspend, Off
 		}
 	gosub, updateActiveWInfo
+}
 }
 
 ; These are special commands to run programs, open files, switch windows, switch profiles, list open windows, etc.
@@ -572,6 +709,13 @@ global selectedProfile
 global profileStr
 global suspended
 global previousProfile
+global iniF
+global globalHeader
+global lastUsedProf
+global defProf
+global tts
+global ttsVolume
+
 
 if (inStr(someStr,"{S}")) ; Suspend any other hotkeys until this command sequence is completely processed
 		{
@@ -616,6 +760,7 @@ if (inStr(someStr,"{NP}")) ; Loads next profile in list of profiles
 		{
 			previousProfile := selectedProfile
 			goSub, nextProfile
+			
 			return 1
 		}
 if (inStr(someStr,"{SLEEP}")) ; Uses AHK sleep command to pause for X milliseconds
@@ -641,22 +786,48 @@ if (inStr(someStr,"{GP}")) ; Gets the named Profile (if it exixts) that follows 
 		{
 			previousProfile := selectedProfile
 			getProfileStr := strReplace(someStr,"{GP}")
+			lastUsedProf := getProfileStr
 			GuiControl, 1:ChooseString, selectedProfile, |%getProfileStr%
 			return 1
 		}
-if (inStr(someStr,"{Home}")) ; Goes to the default Game Controller Wedge profile
+if (inStr(someStr,"{Home}")) ; Go to the Game Controller Wedge profile
 		{
 			previousProfile := selectedProfile
 			GuiControl, 1:Choose, selectedProfile, |2
-			return 1
-		}		
-;if (inStr(someStr,"{PP}")) ; loads the previous profile - not working properly
-		{
-			;tmpProfile := selectedProfile
-			;getProfile(previousProfile)
-			;previousProfile := tmpProfile
+			lastUsedProf := defProf 
 			return 1
 		}
+if (inStr(someStr,"{TTS}"))
+	{
+		ttsString := strReplace(someStr,"{TTS}")
+		tts.Speak(ttsString)
+		return 1
+	}
+if (inStr(someStr,"{TTSC}"))
+	{
+		tts.Speak(clipboard)
+		return 1
+	}
+if (inStr(someStr,"{TTS+}"))
+	{
+		if (ttsVolume < 100)
+			{
+				ttsVolume := ttsVolume + 10
+				tts.Volume := ttsVolume
+				
+			}
+		return 1
+	}
+if (inStr(someStr,"{TTS-}"))
+	{
+		if (ttsVolume > 9)
+			{
+				ttsVolume := ttsVolume - 10
+				tts.Volume := ttsVolume
+				
+			}
+		return 1
+	}
 	return 0
 }
 
@@ -698,7 +869,7 @@ getOpenWindows:
 showGCW:
 {
 
-	WinActivate,2 - Game Controller Wedge
+	WinActivate, 2 - Game Controller Wedge
 	goSub, updateActiveWInfo
 	return
 }
@@ -721,9 +892,10 @@ iniGet(iniKey,inF,inS) ; return a value from file: inF, under header: inS, for k
    }
 }
 
-iniSetup: ;retrieve values stored in file gcw2.ini - refresh view
+iniSetup: ;retrieve values stored in file gcw.ini - refresh view
 {
 	iniH := selectedProfile
+	
 	Msg1 := iniGet("Msg1",iniF,iniH)
 	Msg2 := iniGet("Msg2",iniF,iniH)
 	Msg3 := iniGet("Msg3",iniF,iniH)
@@ -748,7 +920,7 @@ iniSetup: ;retrieve values stored in file gcw2.ini - refresh view
 	Eb10 := iniGet("Eb10",iniF,iniH)
 	Eb11 := iniGet("Eb11",iniF,iniH)
 	Eb12 := iniGet("Eb12",iniF,iniH)
-	DPadmode := iniGet("DPadmode",iniF,iniH)
+	;DPadmode := iniGet("DPadmode",iniF,iniH)
 	
 	goSub, updateView
 	Return
@@ -757,6 +929,9 @@ iniSetup: ;retrieve values stored in file gcw2.ini - refresh view
 iniSave: ; store values from variables, into file iniF, under header iniH, for each named key.
  {
 	 iniH := selectedProfile
+	 iniWrite, %iniH%, %iniF%, %defProf%, lastUsedProf
+	 iniWrite, %kbd%, %iniF%, %defProf%, kbd
+	 iniWrite, %DPadmode%, %iniF%, %defProf%, DPadmode
 	 ;msgBox, saving profile: %iniH%
 	 iniWrite, %Msg1%, %iniF%, %iniH%, Msg1
 	 iniWrite, %Msg2%, %iniF%, %iniH%, Msg2
@@ -782,9 +957,9 @@ iniSave: ; store values from variables, into file iniF, under header iniH, for e
 	 iniWrite, %Eb10%, %iniF%, %iniH%, Eb10
 	 iniWrite, %Eb11%, %iniF%, %iniH%, Eb11
 	 iniWrite, %Eb12%, %iniF%, %iniH%, Eb12
-	 iniWrite, %DPadmode%, %iniF%, %iniH%, DPadmode
+	 ;iniWrite, %DPadmode%, %iniF%, %iniH%, DPadmode
 	 
-	goSub, iniSetup			
+	 goSub, iniSetup
 	return
 }
 
