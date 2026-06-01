@@ -1,4 +1,4 @@
-<img width="481" height="446" alt="image1" src="https://github.com/user-attachments/assets/2376088c-6069-42fa-afa3-546e08caf33e" />
+<img width="969" height="893" alt="image1" src="https://github.com/user-attachments/assets/c4e273ef-2079-4424-be34-8c9feab37283" />
 
 GCW is a **Windows only** tool for creating and executing macros that are triggered by pressing game controller buttons.  It is very much like Joy2Key or XPadder. Type a macro into a text field, and you are ready to try it. Macros can send text, issue key sequences like Ctrl-p, perform mouse clicks at coordinates, and more.
 Built in commands allow you to run programs, open folders and known file types, toggle through open windows, change profiles.
