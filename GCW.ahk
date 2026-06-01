@@ -31,6 +31,9 @@ kbd:= false
 ttsVolume := 50
 tts:= ComObjCreate("SAPI.SpVoice")
 tts.Volume := ttsVolume
+reloading := false
+Startup := false
+startMsg := ""
 Msg1 := "message btn1 {return}"
 Msg2 := "message btn2 {return}"
 Msg3 := "message btn3 {return}"
@@ -90,7 +93,8 @@ Gui, 1:Add, Edit, x130 y439 w490 h30 multi vMsg12, GC12 - send string{return}
 Gui, 1:Add, Text, x6 y485 w520 h20 , Using Profile: 
 Gui, 1:Add, Text, x6 y505 w250 h20 vGCsendsTo, Sending To:
 Gui, 1:Add, Text, x320 y505 w80 h20 vkbd, KBD = %kbd%
-Gui, 1:Add, CheckBox, x530 y505 w120 h20 Checked vDPadmode gsetDPadMode, DPad Mode
+Gui, 1:Add, CheckBox, x420 y500 W115 h30 vStartup gsetStartup, Start w/ DPB12
+Gui, 1:Add, CheckBox, x535 y505 w120 h20 Checked vDPadmode gsetDPadMode, DPad Mode
 Gui, 1:Add, DropDownList, x90 y479 w530 gnewProfile vselectedProfile, %selectedProfile%||%profileStr%
 Gui, 1:Add, Button, x5 y530 w100 h30 gEnableAll, Enable All
 Gui, 1:Add, Button, x110 y530 w100 h30 gDisableAll, Disable All
@@ -136,9 +140,23 @@ gosub, updateActiveWInfo
 selectedProfile := iniGet("lastUsedProf",iniF,defProf)
 kbd:= iniGet("kbd",iniF,defProf)
 DPadmode := iniGet("DPadmode",iniF,defProf)
+reloading := iniGet("reloading",iniF,defProf)
+Startup := iniGet("Startup", iniF, defProf)
 gosub, iniSetup
 SetTimer, updateActiveWInfo, 250
 SetTimer, getDPaddata, 100
+if (reloading)
+	{ 
+		reloading := false
+		iniWrite, %reloading%, %iniF%, %defProf%, Reloading
+	} else {
+		if (Startup)
+			{
+				startMsg := iniGet("Msg12", iniF, defProf)
+				parseMsg(startMsg)
+			}
+	}
+
 
 updateActiveWInfo:
 	{ 
@@ -224,6 +242,13 @@ nextWindow:
 		
 	}
 	
+setStartup:
+	{
+		Gui, Submit, NoHide
+		iniWrite, %Startup%, %iniF%, %defProf%, Startup
+		Return
+	}
+	
 setDPadMode:
 	{
 		Gui, Submit, NoHide
@@ -254,6 +279,7 @@ saveProfile:
 			return
 		saved := true
 		goSub, setVars
+		reloading := true
 		goSub, iniSave
 		Reload	
 		Return
@@ -274,6 +300,7 @@ saveAsNewProfile:
 		selectedProfile := newProfileName
 		msgBox, Saving as new %selectedProfile%
 		saved := true
+		reloading := true
 		goSub, iniSave
 		Reload
 		return
@@ -311,6 +338,7 @@ getProfile(someProfileString)
 					{
 						selectedProfile := profileList[A_Index]
 						profileIx := A_Index
+						reloading := false
 						goSub, iniSetup
 						Sleep, 100
 						GuiControl, 1:Choose, selectedProfile, %selectedProfile%
@@ -359,6 +387,7 @@ getIndex(arr, item) {
 updateView:
 	{
 		global DPadmode
+		global Startup
 		loop, 12  ; uodate the messages and the enablement of all 12 game controller buttons.
 		{
 			enableX := "Eb" . A_Index
@@ -377,6 +406,7 @@ updateView:
 		profileList := strSplit(profileStr,"|")
 		GuiControl,,selectedProfile, %selectedProfile% || %profileStr%
 		GuiControl,,DPadmode,%DPadmode%
+		GuiControl,,Startup,%Startup%
 		Return
 	}
 	
@@ -782,6 +812,13 @@ if (inStr(someStr,"{AW}")) ; Activates the window with any text that follows {WA
 			WinActivate, %waStr%
 			return 1
 		}
+if (inStr(someStr,"{WWA}")) ; wait until the window that matches the tile becomes active.
+		{
+			
+			waStr := strReplace(someStr,"{WWA}")
+			WinWaitActive, %waStr%
+			return 1
+		}
 if (inStr(someStr,"{GP}")) ; Gets the named Profile (if it exixts) that follows the {GP} command
 		{
 			previousProfile := selectedProfile
@@ -923,6 +960,7 @@ iniSetup: ;retrieve values stored in file gcw.ini - refresh view
 	;DPadmode := iniGet("DPadmode",iniF,iniH)
 	
 	goSub, updateView
+	
 	Return
 }
 
@@ -932,6 +970,7 @@ iniSave: ; store values from variables, into file iniF, under header iniH, for e
 	 iniWrite, %iniH%, %iniF%, %defProf%, lastUsedProf
 	 iniWrite, %kbd%, %iniF%, %defProf%, kbd
 	 iniWrite, %DPadmode%, %iniF%, %defProf%, DPadmode
+	 iniWrite, %reloading%, %iniF%, %defProf%, Reloading
 	 ;msgBox, saving profile: %iniH%
 	 iniWrite, %Msg1%, %iniF%, %iniH%, Msg1
 	 iniWrite, %Msg2%, %iniF%, %iniH%, Msg2
@@ -958,7 +997,6 @@ iniSave: ; store values from variables, into file iniF, under header iniH, for e
 	 iniWrite, %Eb11%, %iniF%, %iniH%, Eb11
 	 iniWrite, %Eb12%, %iniF%, %iniH%, Eb12
 	 ;iniWrite, %DPadmode%, %iniF%, %iniH%, DPadmode
-	 
 	 goSub, iniSetup
 	return
 }

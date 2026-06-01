@@ -16,9 +16,10 @@
         for Windows computers that are triggered by pressing game
         controller buttons. It is very much like<a
           href="https://joytokey.net/en/"> Joy2Key</a> or <a
-          href="https://xpadder.com/">XPadder</a>, but it is easier and
-        has very capable macro abilities. With GCW you type a macro into
-        a text field, and you are ready to try it.<br>
+          href="https://xpadder.com/">XPadder</a>, but it is easier for
+        building more complex and capable macros without too much of a
+        learning curve. With GCW you type a macro into a text field, and
+        you are ready to try it.<br>
         <br>
         Is GCW useful for gamers? I am not so sure. It maybe that GCW
         responds too slowly for many gamers, and because it a wrapper
@@ -39,6 +40,10 @@
         more.<br>
         <br>
         GCW is based on <a href="https://www.autohotkey.com/">Autohotkey
+
+
+
+
 
 
 
@@ -91,7 +96,7 @@
       <b><i>In addition to gamepad buttons, GCW also optionally supports
           input from a game controller <a
             href="#More_about_the_GCW_Windows">DPad</a> (see more
-          below), and from the<a href="#More_about_the_GCW_Windows">
+          below), or from the<a href="#More_about_the_GCW_Windows">
             keyboard </a>(also see more below.)</i></b><br>
       <br>
       <img src="images/image4.png" alt="GCW 1 Test Joy Buttons Window"
@@ -156,13 +161,17 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
             the <b>Enable/Disable All</b> button.</li>
           <li> You can save changes you make with the <b>Save Profile</b>
             button. <i>Be sure to Save</i> any changes you want to keep
-            before loading a new profile or exiting GCW</li>
+            before loading a new profile or exiting GCW.</li>
           <li> You can create a new profile with the <b>Save Profile As</b>
             button.</li>
           <li> You can remove an entire profile with the <b>Delete
               Profile</b> button - except the default Game Controller
-            Wedge profile</li>
+            Wedge profile.</li>
           <li> You can select any profile from the <b>Using Profile:</b>&nbsp;
+
+
+
+
 
 
 
@@ -171,7 +180,16 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
               Command</a></li>
           <li> The <b>Sending To:</b>&nbsp; label (most times) shows
             the title of the application window that will receive your
-            macros</li>
+            macros. Just which window GCW will send to depends on which
+            application was opened last, or which has the focus. If you
+            attempt to send something to a window that can't use the
+            sent macro, Windows will produce a chime sound, or, maybe
+            nothing will happen at all. So, if you expect something to
+            have happened that did not, suspect that the macro was sent
+            to the wrong window. <a href="#Special_Commands">GCW has
+              built-in commands</a> you can use to activate a desired
+            window to minimize sending to a wrong window.<br>
+          </li>
           <li>The <b>KBD = On</b> (or Off) is a new feature that
             optionally allows a keyboard to launch macros where keys 1 -
             9, 0 are the same as Joy buttons 1 - 10, and the PrtScr key
@@ -184,45 +202,56 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
             announcement. The keyboard mode is auto-saved and will
             persist between GCW sessions.<br>
           </li>
-          <li> <b>About GCW&nbsp; </b>opens this help file</li>
+          <li> <b>About GCW&nbsp; </b>opens this help file.</li>
           <li>The <b>GCW </b>button in the Test Joy Buttons window
-            brings the main GCW window into the foreground<br>
+            brings the main GCW window into the foreground.</li>
+          <li>The <b>Start w/ DPB12</b> checkbox, if checked, runs the
+            macro defined in the <b>Game Controller Wedge</b> (default)
+            profile for Button 12 when GCW is launched. You can use this
+            feature to simplify setting up a starting environment. You
+            could also add a link to GCW in your Windows startup folder
+            so that GCW does this when you restart your Windows
+            computer. The Button 12 macro will be executed regardless of
+            the enable checkbox state.<br>
           </li>
+          <li>The <b>DPad Mode</b> checkbox permits users to
+            additionally employ the D-Pad on a game controller to
+            activate macros 9, 10, 11 and 12 as: Up, Right, Down and
+            Left on the DPad respectively. This allows game controllers
+            with fewer than 12 buttons to have more macro activation
+            options. The “POV hat” as it is shown in the Windows Game
+            Controllers control panel is mapped to the D-pad on some
+            game controllers.&nbsp; On other gamepads, you may need to
+            activate a special mode on the game controller itself to get
+            it to work with GCW. The <b>DPad status</b> is shown in the
+            “Test Joy Buttons” window where:</li>
         </ul>
       </div>
-      The <b>DPad Mode</b> checkbox permits users to additionally
-      employ the D-Pad on a game controller to activate macros 9, 10, 11
-      and 12 as: Up, Right, Down and Left on the DPad respectively. This
-      allows game controllers with fewer than 12 buttons to have more
-      macro activation options. The “POV hat” as it is shown in the
-      Windows Game Controllers control panel is mapped to the D-pad on
-      some game controllers.&nbsp; On other gamepads, you may need to
-      activate a special mode on the game controller itself to get it to
-      work with GCW. The <b>DPad status</b> is shown in the “Test Joy
-      Buttons” window where:<br>
-      <br>
       <div align="left">
         <ul>
-          <li><b>DPad Not Active</b> means that the DPad Mode box is
-            unchecked.</li>
-          <li> <b>No Controller Present</b> means DPad Mode is checked,
-            but no there is no game controller plugged in that will work
-            with this version of GCW.</li>
-          <li> <b>DPad Status:</b><b> -1</b> means DPad Mode is
-            checked, and no direction button is pressed.</li>
-          <li><b>DPad Status: 0 </b>means the DPad Mode is checked, and
-            the DPad Up button is pressed (Joy Button 9.)<br>
-          </li>
-          <li> <b>DPad Status: 9000</b> means DPad Mode is checked, and
-            the DPad Right button is pressed (Joy Button 10).</li>
-          <li> <b>DPad Status: 18000</b>&nbsp; means DPad Mode is
-            checked, and the DPad Down button is pressed (Joy Button
-            11.)<br>
-          </li>
-          <li> <b>DPad Status: 27000</b> means DPad Mode is checked,
-            and the DPad Left button is pressed (Joy Button 12.)</li>
+          <ul>
+            <li><b>DPad Not Active</b> means that the DPad Mode box is
+              unchecked.</li>
+            <li> <b>No Controller Present</b> means DPad Mode is
+              checked, but no there is no game controller plugged in
+              that will work with this version of GCW.</li>
+            <li> <b>DPad Status:</b><b> -1</b> means DPad Mode is
+              checked, and no direction button is pressed.</li>
+            <li><b>DPad Status: 0 </b>means the DPad Mode is checked,
+              and the DPad Up button is pressed (Joy Button 9.)<br>
+            </li>
+            <li> <b>DPad Status: 9000</b> means DPad Mode is checked,
+              and the DPad Right button is pressed (Joy Button 10).</li>
+            <li> <b>DPad Status: 18000</b>&nbsp; means DPad Mode is
+              checked, and the DPad Down button is pressed (Joy Button
+              11.)<br>
+            </li>
+            <li> <b>DPad Status: 27000</b> means DPad Mode is checked,
+              and the DPad Left button is pressed (Joy Button 12.)</li>
+          </ul>
         </ul>
       </div>
+      <br>
       GCW responds only to Up, Right, Down and Left. button presses on
       the DPad. Buttons 9, 10, 11 and 12 remain active regardless of
       DPad Mode.<br>
@@ -268,14 +297,22 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       Windows key are referred to as modifier keys.<br>
       <br>
       Special characters like tab, space (at the end or beginning of a
-      macro), or backspace all need to be enclosed in braces as in:
-      {left} for left arrow. Or, <b>{F11} </b>for the F11 key. <a
+      macro), or backspace all need to be enclosed in braces as in: <b>{left}</b>
+      for left arrow. Or, <b>{F11} </b>for the F11 key. <a
         href="https://www.autohotkey.com/docs/v1/lib/Send.htm#keynames"><b>See
 
 
 
 
+
+
+
+
           more about including special characters in your macros </b><b>here
+
+
+
+
 
 
 
@@ -290,6 +327,10 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
 
 
 
+
+
+
+
           about modifier keys here at the AHK site</b></a>)<br>
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # = Windows
@@ -297,6 +338,10 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ! =
       Alt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
 
 
 
@@ -324,6 +369,10 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
           prefix.<br>
           <br>
         </b></i>A name and address fill in: <b>Fred{tab}Flintstone{tab}345
+
+
+
+
         Cave Stone Rd.{tab}Bedrock{tab}NY{tab}12345{enter}</b><br>
       <br>
       You can press a special character key multiple times by adding a
@@ -338,6 +387,10 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
         600}</b><br>
       <br>
       <a href="https://www.autohotkey.com/docs/v1/lib/Click.htm#Remarks"><b>You
+
+
+
+
 
 
 
@@ -357,6 +410,10 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
 
 
 
+
+
+
+
           there is much more about what you can send can be found here
           at the AHK site</b></a><br>
       <br>
@@ -366,10 +423,13 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       own special commands. These commands always start with the command
       enclosed in braces like this: <b>{R}</b><br>
       <h4> Aliased AutoHotkey Commands:</h4>
-      <div align="left"> <b>{R}</b> - invokes the AHK Run command. The
-        {R} command can open websites, programs, known file types and
-        folders as long as you follow the {R} with a correct file path,
-        or URL. Try this example: <b>{R}https://duckduckgo.com/</b> <br>
+      <div align="left"> <b>{R}</b> - invokes the AHK <a
+          href="https://www.autohotkey.com/docs/v1/lib/Run.htm">Run</a>
+        command. The {R} command can open websites, programs, known file
+        types and folders as long as you follow the {R} with a correct
+        file path, or URL.&nbsp; The file path or URL can be optionally
+        contained within quotes. Try this example: <b>{R}https://duckduckgo.com/&nbsp;&nbsp;</b>
+        <br>
         <br>
         <b>{SLEEP} </b>- Allows you to pause GCW activity to allow for
         programs to open, and other processes to complete before
@@ -378,14 +438,27 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
         milliseconds. So, <b>{SLEEP}5000</b> would pause GCW activities
         for 5 seconds.<br>
         <br>
-        <b>{AW}</b> - Activate an open Windows window. This command
-        allows you to jump to a window based on any text that appears in
-        the title bar of a window.&nbsp; To do this follow the {AW}
-        command with some text that matches text in the window title.
-        The text does not have to be the complete title, just any part
-        of it. For example, <b>{AW}Calc</b> will activate the
-        Calculator app (if it was open). Just be sure that the text is
-        unique to the window you hope to activate.<br>
+        <b>{AW}</b> - uses the AHK <a
+          href="https://www.autohotkey.com/docs/v1/lib/WinActivate.htm">WinActivate</a>
+        command. Activate an open Windows window. This command allows
+        you to jump to a window based on any text that appears in the
+        title bar of a window.&nbsp; To do this follow the {AW} command
+        with some text that matches text in the window title. The text
+        does not have to be the complete title, just any part of it. For
+        example, <b>{AW}Calc</b> will activate the Calculator app (if
+        it was open). Just be sure that the text is unique to the window
+        you hope to activate.<br>
+        <br>
+        <b>{WWA}</b> - uses the AHK <a
+          href="https://www.autohotkey.com/docs/v1/lib/WinWaitActive.htm">WinWaitActive</a>
+        command. Wait for an open, or opening, window to become active
+        before proceeding.&nbsp; The {WWA} command can be followed by
+        just a part of the title to identify the window you are waiting
+        for in the same way as the {AW} command. You can use this
+        command after running the {R} command to assure that your target
+        window is active before sending text to it as a more convenient,
+        reliable way than using the {Sleep} + {AW}&nbsp; commands to do
+        the same thing.<br>
         <br>
         <b>{S}</b> - Suspend other GCW buttons until the macro for this
         button has finished. Place this special command at the beginning
@@ -496,6 +569,10 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
 
 
 
+
+
+
+
         can find out more at this AutoHotKey community post if you are
         having issues controlling or sending something to a window with
         GCW</a>.<br>
@@ -518,12 +595,20 @@ href="https://www.amazon.com/Ultimate-Wireless-Controller-PC-Joysticks-Remappabl
 
 
 
+
+
+
+
                 Ultimate 2C Wireless Controller</a> - </b>Many USB
             gamepads available on Amazon will have at least 10 buttons.
             This wireless one looks like it has at least 12 for around
             $25:&nbsp;</li>
           <li> <a
 href="https://www.xbox.com/en-US/accessories/controllers/xbox-adaptive-controller"><b>The
+
+
+
+
 
 
 
@@ -536,10 +621,18 @@ href="https://www.amazon.com/Leverless-Controller-Arcade-Stick-Haute42-All-Butto
 
 
 
+
+
+
+
                 Leverless Controller Arcade Stick</b>,</a> buttons only
             controller, $48, Amazon</li>
           <li> <a
 href="https://www.amazon.com/Bluetooth-Gamepad-Keychain-Controller-Raspberry-Turquoise/dp/B081HML6MP"><b>8Bitdo
+
+
+
+
 
 
 
@@ -549,6 +642,10 @@ href="https://www.amazon.com/Bluetooth-Gamepad-Keychain-Controller-Raspberry-Tur
             wireless, small game controller, $20.</li>
           <li> <b><a
 href="https://www.amazon.com/Buttons-EG-STARTS-Joystick-Raspberry/dp/B01M2X88QP">EG
+
+
+
+
 
 
 
