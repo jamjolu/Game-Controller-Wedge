@@ -47,6 +47,7 @@
 
 
 
+
           V1.1</a>. The well known Autohotkey (AHK) scripting tool
         offers means for emulating keyboard and mouse actions,
         interacting with windows, and much more. It is frequently used
@@ -61,7 +62,7 @@
       1. <a href="#GCW_Windows:"><b>GCW /windows- an overview </b></a><br>
       <br>
       2. <a href="#More_about_the_GCW_Windows"><b>More about the GCW
-          windows</b></a> <br>
+          windows and useful Hotkeys</b></a> <br>
       <br>
       3. <a href="#And_now_there_are_2_GCWs:_one_for"><b>What if I have
           2 controllers?</b></a> <br>
@@ -176,6 +177,7 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
 
 
 
+
             drop down menu, or via the <a href="#GP_">{GP} Special
               Command</a></li>
           <li> The <b>Sending To:</b>&nbsp; label (most times) shows
@@ -256,7 +258,56 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       the DPad. Buttons 9, 10, 11 and 12 remain active regardless of
       DPad Mode.<br>
       <i>If you make a change to your DPad Mode</i><i> the setting is
-        auto-saved and will persist between sessions.</i><br>
+        auto-saved and will persist between sessions.<br>
+        <br>
+      </i>
+      <h3>GCW Hotkeys do stuff:</h3>
+      <div align="left">
+        <ol>
+          <li>&nbsp;<b>Ctrl-Alt-k </b>= Turn keyboard mode on/off -
+            When on, this mode allows using keys 1 - 9, 0 to activate
+            Joy buttons 1 - 10, and allows the PrtScr key to activate
+            joy button 11, and the Ins key to activate button 12. You
+            will hear an announcement regarding the keyboard mode status
+            if you change it. Any keyboard mode change remains
+            persistent across GCW sessions.<br>
+          </li>
+          <li><b>Alt-m </b>= Show the current mouse cursor coordinates
+            in a tooltip. This also copies the coordinates into the
+            clipboard for convenient pasting into a macro.</li>
+          <li><b>Ctrl-Alt-m</b> = Close the tooltip message box.</li>
+          <li><b>Ctrl-Alt-h</b> = Show or Hide the GCW window and the
+            TJB window. If hidden, GCW remains active and will respond
+            to game controller interactions as well as keyboard
+            interactions if keyboard mode is on. Hiding the user
+            interfaces can help reduce screen clutter, and prevent
+            inadvertent&nbsp; interactions with GCW. Showing or hiding
+            GCW using the hotkey does not persist across sessions unless
+            you use the following hotkey sequence.<br>
+          </li>
+          <li><b>Shift-Ctrl-Alt-h</b> = <i>Save the current hidden or
+              shown GCW windows status</i>. Upon the next reopening of
+            GCW if the hidden status was saved, GCW will open, but it
+            will be hidden. Having GCW open in hidden mode may be
+            helpful once you have a well defined macro set for a user
+            who is not expected to edit GCW setups, but who will benefit
+            from GCW macros to simplify computer interactions.&nbsp; You
+            will hear an announcement as to hidden or shown status that
+            was saved, and if GCW is hidden when you reopen it you will
+            hear an announcement regarding the hidden status.</li>
+        </ol>
+        <p><i><b>If you've hidden the GCW windows, how can you close the
+              GCW application?</b></i> <br>
+          Two ways: <br>
+          <b>First</b>, you can just issue Ctrl-Alt-h and click the red
+          X in the main GCW window This will have no effect on the next
+          GCW restart. <br>
+          <b>Second</b>, you can click the upward pointing chevron in
+          the right side of the system tray to show hidden icons, then
+          right-click the GCW icon and select "exit".<br>
+        </p>
+      </div>
+      <br>
       <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
       <h3><a name="And_now_there_are_2_GCWs:_one_for"></a>And now there
         are 2 GCWs: one for Controller 1, and one for Controller 2</h3>
@@ -308,7 +359,9 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
 
 
 
+
           more about including special characters in your macros </b><b>here
+
 
 
 
@@ -331,6 +384,7 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
 
 
 
+
           about modifier keys here at the AHK site</b></a>)<br>
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # = Windows
@@ -338,6 +392,7 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ! =
       Alt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 
 
 
@@ -373,6 +428,7 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
 
 
 
+
         Cave Stone Rd.{tab}Bedrock{tab}NY{tab}12345{enter}</b><br>
       <br>
       You can press a special character key multiple times by adding a
@@ -394,6 +450,7 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
 
 
 
+
           can do other {click… commands} as well as seen at the AHK
           site.</b></a><br>
       <br>
@@ -407,6 +464,7 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
       Select the browser back button: <b>{browser_back}</b><br>
       <br>
       <a href="https://www.autohotkey.com/docs/v1/lib/Send.htm"><b>Again,
+
 
 
 
@@ -573,6 +631,7 @@ href="https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest"
 
 
 
+
         can find out more at this AutoHotKey community post if you are
         having issues controlling or sending something to a window with
         GCW</a>.<br>
@@ -599,12 +658,14 @@ href="https://www.amazon.com/Ultimate-Wireless-Controller-PC-Joysticks-Remappabl
 
 
 
+
                 Ultimate 2C Wireless Controller</a> - </b>Many USB
             gamepads available on Amazon will have at least 10 buttons.
             This wireless one looks like it has at least 12 for around
             $25:&nbsp;</li>
           <li> <a
 href="https://www.xbox.com/en-US/accessories/controllers/xbox-adaptive-controller"><b>The
+
 
 
 
@@ -625,10 +686,12 @@ href="https://www.amazon.com/Leverless-Controller-Arcade-Stick-Haute42-All-Butto
 
 
 
+
                 Leverless Controller Arcade Stick</b>,</a> buttons only
             controller, $48, Amazon</li>
           <li> <a
 href="https://www.amazon.com/Bluetooth-Gamepad-Keychain-Controller-Raspberry-Turquoise/dp/B081HML6MP"><b>8Bitdo
+
 
 
 
@@ -642,6 +705,7 @@ href="https://www.amazon.com/Bluetooth-Gamepad-Keychain-Controller-Raspberry-Tur
             wireless, small game controller, $20.</li>
           <li> <b><a
 href="https://www.amazon.com/Buttons-EG-STARTS-Joystick-Raspberry/dp/B01M2X88QP">EG
+
 
 
 

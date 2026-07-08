@@ -34,6 +34,7 @@ tts.Volume := ttsVolume
 reloading := false
 Startup := false
 startMsg := ""
+hideme := true
 Msg1 := "message btn1 {return}"
 Msg2 := "message btn2 {return}"
 Msg3 := "message btn3 {return}"
@@ -129,10 +130,10 @@ Gui, 2:Add, Text, x300 y44 w230 h20 vProfileD, profile:%selectedProfile%
 Gui, 2:Add, Text, x530 y44 w80 h20 vkbd, KBD = %kbd%
 Gui, 2:Add, Text, x630 y44 w250 h20 vDPadstate, DPad Hat Status: 
 ; Generated using SmrtGUI Creator 4.0
-Gui, 2:Show, x250 y0 h60 w785, 1 - Test Joy Buttons
-Gui, 1:Show, x145 y140 h571 w642, 1 - Game Controller Wedge
 
 
+hideme := iniGet("hideme", iniF, defProf)
+goSub showHideGui
 CoordMode, Mouse, Screen
 CoordMode, toolTip, Screen
 SetTitleMatchMode, 2
@@ -142,6 +143,9 @@ kbd:= iniGet("kbd",iniF,defProf)
 DPadmode := iniGet("DPadmode",iniF,defProf)
 reloading := iniGet("reloading",iniF,defProf)
 Startup := iniGet("Startup", iniF, defProf)
+if (hideme) {
+	tts.speak("GCW and TJB are open, but hidden. Use control alt h to reveal them.")
+}
 gosub, iniSetup
 SetTimer, updateActiveWInfo, 250
 SetTimer, getDPaddata, 100
@@ -155,6 +159,19 @@ if (reloading)
 				startMsg := iniGet("Msg12", iniF, defProf)
 				parseMsg(startMsg)
 			}
+	}
+	
+showHideGui:
+	{
+		if !(hideme) 
+		{
+			Gui, 2:Show, x250 y0 h60 w785, 1 - Test Joy Buttons
+			Gui, 1:Show, x145 y140 h571 w642, 1 - Game Controller Wedge
+		} else {
+			Gui, 2:Hide
+			Gui 1: Hide
+			
+		}
 	}
 
 
@@ -348,6 +365,25 @@ getProfile(someProfileString)
 			}
 		return
 	}
+	
+; toggle viewing GCW and TJB GUI windows using ctrl-alt-h
+
+^!h::
+	hideme := !hideme
+	gosub, showHideGui
+Return
+
+; save the current state for hiding the user GUI so that GCW and TJB will be hidden or shown upon restarting.
++^!h::  ; uses shift-ctrl-alt-h
+	 iniWrite, %hideme%, %iniF%, %defProf%, hideme
+	 if (hideme)
+		{
+			tts.speak("the user interfaces will be hidden on next restart")
+		} else {
+			tts.speak("the user interfaces will be shown on next restart")
+		}
+return
+		
 	
 ; get mouse coords --> Alt+m
 !m::	
@@ -971,6 +1007,7 @@ iniSave: ; store values from variables, into file iniF, under header iniH, for e
 	 iniWrite, %kbd%, %iniF%, %defProf%, kbd
 	 iniWrite, %DPadmode%, %iniF%, %defProf%, DPadmode
 	 iniWrite, %reloading%, %iniF%, %defProf%, Reloading
+	 iniWrite, %hideme%, %iniF%, %defProf%, hideme
 	 ;msgBox, saving profile: %iniH%
 	 iniWrite, %Msg1%, %iniF%, %iniH%, Msg1
 	 iniWrite, %Msg2%, %iniF%, %iniH%, Msg2
