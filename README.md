@@ -5,7 +5,8 @@ Built in commands allow you to run programs, open folders and known file types, 
 
 **There are now 3 versions of Game Controller Wedge - GCW, GCW2, GCWX** -GCW and GCW2: One for wires USB Joystick/Game Controller 1, and one for wired USB Joystick/Game Controller 2 - gcw.exe or gcw.ahk, and gcw2.exe or gcw2.ahk respectively. Both versions are basically identical except that they respond to a controllers that report as #1 or #2 respectively. You can use this Autohotkey script to find out what your controller identifies as: https://www.autohotkey.com/docs/v1/scripts/index.htm#ControllerTest  
 You can use the 2 USB connected controllers simultaneously as long as you are running GCW and GCW2 with controllers that identify as #1 and #2. Each version of GCW has separate setting files. The different versions present different colored windows blue for GCW and yellow for GCW2. The title bar also has a 1 or 2 in it to distinguish the two versions.
-GCWX - is a version of GCW that exclusively supports Xinput compliant Bluetooth Game Controllers. It is currently available as GCWX.ahk, and therefore requires you to download and install Autohotkey V1. It has its own settings and help file. See GCWX_Help.html for more details.
+
+**GCWX** - is a version of GCW that exclusively supports Xinput compliant Bluetooth Game Controllers. It is currently available as GCWX.ahk, and therefore requires you to download and install Autohotkey V1. It has its own settings and help file. See GCWX_Help.html for more details.
 
 You can compose up to 12 macros that you can save as a profile that you name. You can create as many profiles as you like. 
 
