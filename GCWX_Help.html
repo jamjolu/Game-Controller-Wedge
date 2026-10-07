@@ -1,0 +1,728 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Game Gontroller Wedge Help</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+  </head>
+  <body>
+    <div align="center">
+      <h1>GCWX Help</h1>
+      <h2>Xinput Game Controller Wedge Description</h2>
+      <i>By Jim Luther</i><br>
+      <a href="https://github.com/jamjolu/Game-Controller-Wedge">https://github.com/jamjolu/Game-Controller-Wedge</a><br>
+      <br>
+      GCWX is a version of GCW that works exclusively with Bluetooth
+      Xinput compliant game controllers that use Microsoft's Xinput API.
+      Most of the details in this document are otherwise the same as the
+      help page for GCW. See this for a more detailed <a
+        href="#Why_GCWX">explanation about why GCWX is needed</a>. <br>
+      <span style="color: rgb(33, 33, 33); font-family: -apple-system,
+        BlinkMacSystemFont, &quot;Avenir Next&quot;, Avenir,
+        &quot;Nimbus Sans L&quot;, Roboto, &quot;Noto Sans&quot;,
+        &quot;Segoe UI&quot;, Arial, Helvetica, &quot;Helvetica
+        Neue&quot;, sans-serif; font-size: 18.4px; font-style: normal;
+        font-variant-ligatures: normal; font-variant-caps: normal;
+        font-weight: 400; letter-spacing: normal; orphans: 2;
+        text-align: -webkit-center; text-indent: 0px; text-transform:
+        none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width:
+        0px; white-space: normal; background-color: rgb(255, 255, 255);
+        text-decoration-thickness: initial; text-decoration-style:
+        initial; text-decoration-color: initial; display: inline
+        !important; float: none;">To use GCWX, connect to your Xinput
+        Bluetooth controller first, then run GCWX.ahk.<br>
+        &nbsp;
+        <i><b> In this document GCW and GCWX&nbsp; refer to the same
+            thing, except where specifically referring to GCWX.</b></i><br>
+      </span> <br>
+      <div align="left"> GCW is a tool for creating and executing macros
+        for Windows computers that are triggered by pressing game
+        controller buttons. It is very much like<a
+          href="https://joytokey.net/en/"> Joy2Key</a> or <a
+          href="https://xpadder.com/">XPadder</a>, but it is simpler for
+        building more complex and capable macros without too much of a
+        learning curve. With GCW you type a macro into a text field, and
+        you are ready to try it.<br>
+        <br>
+        With GCW you can compose up to 12 macros that you can save as a
+        “profile” that you name. You can create as many profiles as you
+        like.<br>
+        <br>
+        Built-in commands allow you to run programs, open folders and
+        known file types, open web pages, toggle through open windows,
+        open active windows, and change profiles, click targets, and
+        more.<br>
+        <br>
+        GCW is based on <a href="https://www.autohotkey.com/">Autohotkey
+
+
+
+
+
+
+
+
+
+
+
+
+
+          V1.1</a>. The well known Autohotkey (AHK) scripting tool
+        offers means for emulating keyboard and mouse actions,
+        interacting with windows, and much more. It is frequently used
+        to automate repetitive computer tasks.<br>
+      </div>
+      <br>
+      <br>
+      <b>Please keep all the materials in the GCW inside the downloaded
+        folder (that also has GCWX.ahk.) - if you don’t, you will
+        experience a ton of error messages!</b><br>
+      <br>
+      <h3> <a name="Table_of_Contents:"></a>Table of Contents:</h3>
+      1. <a href="#GCW_Windows:"><b>GCWX /windows- an overview </b></a><br>
+      <br>
+      2. <a href="#More_about_the_GCW_Windows"><b>More about the GCWX
+          windows and useful Hotkeys</b></a> <br>
+      <br>
+      3. <a href="#Anatomy_of_a_Macro"><b>Anatomy of a macro</b></a> <br>
+      <br>
+      4. <a href="#More_macro_examples"><b>More macro examples</b></a>
+      <br>
+      <br>
+      5.<a href="#Special_Commands"> <b>GCWX Special Commands</b> <br>
+      </a><br>
+      6. <a href="#Combining_Commands_and_Macro_Strings"><b>Combining
+          macros and commands</b><br>
+      </a><br>
+      8. <b><a href="#Limitations__Contact">Limitations/Contact</a> </b><br>
+      <br>
+      9. <a href="#How_can_I_get_GCW"><b>How can I get GCWX?</b></a><br>
+      <br>
+      <br>
+      <h3><b><a name="GCW_Windows:"></a>GCWX Windows:</b></h3>
+      This is the main GCWX window where you define your macros, or
+      issue commands.<br>
+      <br>
+      <img src="images/gcwx_main.png" alt="The Game Controller Wedge X
+        Main Window" width="481" height="446"><br>
+      <br>
+      GCWX supports up to 12 macros you define which are triggered by
+      joystick or gamepad buttons 1 through 12.<br>
+      <br>
+      <br>
+      <b><i>GCWX only supports input from a game controller <a>DPad</a>&nbsp;
+          that map to game controller buttons 9 to 12 as shown here:<br>
+          <br>
+        </i></b>
+      <div align="center"><b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803"><b>GCWX
+              buttons to Xinput Button Mapping Details</b></b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 1 = XInput A</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 2 = XInput B</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 3 = XInput X</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 4 = XInput Y</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 5 = XInput Left Shoulder</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 6 = XInput Right Shoulder</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 7 = XInput Back</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 8 = XInput Start</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 9 = XInput DPad Up</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 10 = XInput DPad Right</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 11 = XInput DPad Down</b></b><br>
+        <b><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803">GCWX
+            Button 12 = XInput DPad Left</b></b><br>
+      </div>
+      <b><i><b style="font-weight:normal;"
+            id="docs-internal-guid-cac89ff1-7fff-889e-b545-e300978fd803"><br>
+          </b>
+          <meta charset="utf-8">
+        </i></b> <br>
+      <img src="images/gcwx_tjbuttons.png" alt="GCWX Test Joy Buttons
+        window" width="708" height="79"><br>
+      This smaller Test Joy Buttons window lets you test your
+      macros/commands without a game controller. This window, when open,
+      sits on top of other windows. <br>
+      <br>
+      <b><i>Optionally, you can launch macros&nbsp; with&nbsp; single
+          key presses from the<a
+href="file:///D:/Game-Controller-Wedge-xinput/XGCW_Help.html#More_about_the_GCW_Windows">
+            keyboard&nbsp;</a> (see more below.)</i></b><br>
+      <br>
+      <h3><b>Why use game controller buttons to launch macros?</b></h3>
+      Because game controller buttons are unlikely to cause things to
+      happen in typical Windows applications - other than games.<br>
+      <br>
+      <h3><a name="Table_of_contents" href="#Table_of_Contents:"></a><a
+          href="#Table_of_Contents:">Return to Table of contents</a></h3>
+      <h3><a name="More_about_the_GCW_Windows"></a>More about the GCWX
+        Windows</h3>
+      <div align="center"><img src="images/gcwx_main.png" alt="GCWX Main
+          window" width="519" height="481"><br>
+      </div>
+      <br>
+      <img src="images/gcwx_tjbuttons.png" alt="The GCWX Test Joy
+        Buttons window" width="532" height="56"><br>
+      <div align="left">
+        <ul>
+          <li> You can enable/disable any or all game controller buttons
+            for this profile using the <b>Enable check boxes</b>, or
+            the <b>Enable/Disable All</b> button.</li>
+          <li> You can save changes you make with the <b>Save Profile</b>
+            button. <i>Be sure to Save</i> any changes you want to keep
+            before loading a new profile or exiting GCWX.</li>
+          <li> You can create a new profile with the <b>Save Profile As</b>
+            button.</li>
+          <li> You can remove an entire profile with the <b>Delete
+              Profile</b> button - except the default Game Controller
+            Wedge profile.</li>
+          <li> You can select any profile from the <b>Using Profile:</b>&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            drop down menu, or via the <a href="#GP_">{GP} Special
+              Command</a></li>
+          <li> The <b>Sending To:</b>&nbsp; label (most times) shows
+            the title of the application window that will receive your
+            macros. Just which window GCW will send to depends on which
+            application was opened last, or which has the focus. If you
+            attempt to send something to a window that can't use the
+            sent macro, Windows will produce a chime sound, or, maybe
+            nothing will happen at all. So, if you expect something to
+            have happened that did not, suspect that the macro was sent
+            to the wrong window. <a href="#Special_Commands">GCW has
+              built-in commands</a> you can use to activate a desired
+            window to minimize sending to a wrong window.<br>
+          </li>
+          <li>The <b>KBD = On</b> (or Off) is a new feature that
+            optionally allows a keyboard to launch macros where keys 1 -
+            9, 0 are the same as Joy buttons 1 - 10, and the - (minus)
+            key is joy button 11, and the = (equal) key is button 12.
+            This feature may be convenient especially for wireless
+            keyboard users in classrooms settings, but may cause
+            confusion if you forget GCW in keyboard mode is active. The
+            keyboard access option can be turned on/off with the <b>Ctrl-Alt-k</b>
+            key combo. Whenever the keyboard mode changes you will hear
+            a status announcement. The keyboard mode is auto-saved and
+            will persist between GCW sessions.<br>
+          </li>
+          <li> <b>About GCWX&nbsp; </b>opens this help file.</li>
+          <li>The <b>GCW </b>button in the Test Joy Buttons window
+            brings the main GCW window into the foreground.</li>
+          <li>The <b>Start w/ DPB12</b> checkbox, if checked, runs the
+            macro defined in the <b>Game Controller Wedge</b> (default)
+            profile for Button 12 when GCW is launched. You can use this
+            feature to simplify setting up a starting environment. You
+            could also add a link to GCW in your Windows startup folder
+            so that GCW does this when you restart your Windows
+            computer. The Button 12 macro will be executed regardless of
+            the enable checkbox state.<br>
+          </li>
+        </ul>
+      </div>
+      <div align="left">
+        <ul>
+          <ul>
+          </ul>
+        </ul>
+        <ul>
+          <li><b>With GCWX </b>the&nbsp; an Xinput Bluetooth game
+            controller <i>always uses the DPad </i>as some many Xinput
+            controllers don't have 12 buttons. <br>
+          </li>
+        </ul>
+        <ul>
+          <ul>
+          </ul>
+        </ul>
+        <i> </i> </div>
+      <h3>GCW Hotkeys do stuff:</h3>
+      <div align="left">
+        <ol>
+          <li>&nbsp;<b>Ctrl-Alt-k </b>= Turn keyboard mode on/off -
+            When on, this mode allows using keys 1 - 9, 0 to activate
+            Joy buttons 1 - 10, and allows the - key to activate joy
+            button 11, and the = key to activate button 12. You will
+            hear an announcement regarding the keyboard mode status if
+            you change it. Any keyboard mode change remains persistent
+            across GCW sessions.<br>
+          </li>
+          <li><b>Alt-m </b>= Show the current mouse cursor coordinates
+            in a tooltip. This also copies the coordinates into the
+            clipboard for convenient pasting into a macro.</li>
+          <li><b>Ctrl-Alt-m</b> = Close the tooltip message box.</li>
+          <li><b>Ctrl-Alt-h</b> = Show or Hide the GCW window and the
+            TJB window. If hidden, GCW remains active and will respond
+            to game controller interactions as well as keyboard
+            interactions if keyboard mode is on. Hiding the user
+            interfaces can help reduce screen clutter, and prevent
+            inadvertent&nbsp; interactions with GCW. Showing or hiding
+            GCW using the hotkey does not persist across sessions unless
+            you use the following hotkey sequence.<br>
+          </li>
+          <li><b>Shift-Ctrl-Alt-h</b> = <i>Save the current hidden or
+              shown GCW windows status</i>. Upon the next reopening of
+            GCW if the hidden status was saved, GCW will open, but it
+            will be hidden. Having GCW open in hidden mode may be
+            helpful once you have a well defined macro set for a user
+            who is not expected to edit GCW setups, but who will benefit
+            from GCW macros to simplify computer interactions.&nbsp; You
+            will hear an announcement as to hidden or shown status that
+            was saved, and if GCW is hidden when you reopen it you will
+            hear an announcement regarding the hidden status.</li>
+        </ol>
+        <p><i><b>If you've hidden the GCWX windows, how can you close
+              the GCWX application?</b></i> <br>
+          &nbsp; <br>
+          <b>Y</b>ou can just issue Ctrl-Alt-h and click the red X in
+          the main GCWX window This will have no effect on the next GCWX
+          restart. </p>
+      </div>
+      <h3><a href="#Table_of_Contents:">Return to Table of contents</a></h3>
+      <h3><a name="Anatomy_of_a_Macro"></a>Anatomy of a Macro</h3>
+      GCWX&nbsp; uses <b>AutoHotkey</b> and requires that you adhere to
+      the AutoHotkey conventions for the <a
+        href="https://www.autohotkey.com/docs/v1/lib/Send.htm"><b>Send</b>
+        command (at AHK site)</a><br>
+      <br>
+      An Example:&nbsp; <b>^p{enter}</b><br>
+      <br>
+      This example opens the print dialog using the Ctrl-p key combo in
+      many programs, followed by the Enter key which is a special
+      character. You can also use {return} for the Enter key<br>
+      <br>
+      Pressing and holding the Control key for the key that follows is
+      denoted by the ^ character. Keys like Alt, Shift, Ctrl and the
+      Windows key are referred to as modifier keys.<br>
+      <br>
+      Special characters like tab, space (at the end or beginning of a
+      macro), or backspace all need to be enclosed in braces as in: <b>{left}</b>
+      for left arrow. Or, <b>{F11} </b>for the F11 key. <a
+        href="https://www.autohotkey.com/docs/v1/lib/Send.htm#keynames"><b>See
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          more about including special characters in your macros </b><b>here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </b></a><b><a
+          href="https://www.autohotkey.com/docs/v1/lib/Send.htm#keynames">
+          at the AHK site</a>.</b><br>
+      <br>
+      <br>
+      Here is the list of modifier keys: (<a
+        href="https://www.autohotkey.com/docs/v1/lib/Send.htm#Parameters"><b>More
+
+
+
+
+
+
+
+
+
+
+
+
+
+          about modifier keys here at the AHK site</b></a>)<br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # = Windows
+      key<br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ! =
+      Alt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ^ =
+      Control&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+      <br>
+      + = Shift&nbsp;&nbsp; <br>
+      <br>
+      You can combine modifiers as in:<b> ^!{down}</b> which reads as
+      Ctrl-Alt-(down arrow). This combo may turn your display upside
+      down on some Windows computers! <b>^!{up}</b> can restore your
+      display.<br>
+      <br>
+      <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
+      <h3><a name="More_macro_examples"></a>More macro examples</h3>
+      <i><b>With the exception of the {Sleep} command mentioned below,
+          all the examples on this page are carried out by the
+          AutoHotkey <a
+            href="https://www.autohotkey.com/docs/v1/lib/Send.htm">Send
+          </a>command. In GCW the Send command does not require any
+          prefix.<br>
+          <br>
+        </b></i>A name and address fill in: <b>Fred{tab}Flintstone{tab}345
+
+
+
+
+
+
+
+
+
+
+        Cave Stone Rd.{tab}Bedrock{tab}NY{tab}12345{enter}</b><br>
+      <br>
+      You can press a special character key multiple times by adding a
+      number to the special character:<b> {tab 3}</b> (3 tabs).<br>
+      <br>
+      GCW sends keys faster than you can type, so delays may help a
+      program to catch up to your macro, so a <b>{Sleep} </b>command
+      described later in the document can provide a delay to allow the
+      computer to catch up to the macro in progress.<br>
+      <br>
+      You can click at particular screen coordinates: <b>{click 150,
+        600}<br>
+      </b> You can hover the mouse cursor over particular screen
+      coordinates: <b>{click 150 600 0}<br>
+      </b>You can double-click at particular screen coordinates:<b> <b>{click
+
+
+
+          150 600 2}</b></b><br>
+      <br>
+      <a href="https://www.autohotkey.com/docs/v1/lib/Click.htm#Remarks"><b>You
+
+
+
+
+
+
+
+
+
+
+
+
+
+          can do other {click… commands} as well as seen at the AHK
+          site.</b></a><br>
+      <br>
+      To help you to determine your cursor position, GCW has a built-in
+      hotkey sequence: <b>Alt-m</b> opens a tooltip note with the
+      coordinates. The coordinates are also copied to the clipboard. Use
+      <b>Ctrl-Alt-m </b> to hide the tooltip note.<br>
+      <br>
+      Raise the volume a little bit:<b> {volume_up}</b><br>
+      <br>
+      Select the browser back button: <b>{browser_back}</b><br>
+      <br>
+      <a href="https://www.autohotkey.com/docs/v1/lib/Send.htm"><b>Again,
+
+
+
+
+
+
+
+
+
+
+
+
+
+          there is much more about what you can send can be found here
+          at the AHK site</b></a><br>
+      <br>
+      <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
+      <h3> <a name="Special_Commands"></a>Special Commands</h3>
+      In addition to the standard AHK special characters, GCW offers its
+      own special commands. These commands always start with the command
+      enclosed in braces like this: <b>{R}</b><br>
+      <h4> Aliased AutoHotkey Commands:</h4>
+      <div align="left"> <b>{R}</b> - invokes the AHK <a
+          href="https://www.autohotkey.com/docs/v1/lib/Run.htm">Run</a>
+        command. The {R} command can open websites, programs, known file
+        types and folders as long as you follow the {R} with a correct
+        file path, or URL.&nbsp; The file path or URL can be optionally
+        contained within quotes. Try this example: <b>{R}https://duckduckgo.com/&nbsp;&nbsp;</b>
+        <br>
+        <br>
+        <b>{SLEEP} </b>- Allows you to pause GCW activity to allow for
+        programs to open, and other processes to complete before
+        allowing GCW to continue sending macro text or commands. To do
+        this, follow the {SLEEP} command with a number representing
+        milliseconds. So, <b>{SLEEP}5000</b> would pause GCW activities
+        for 5 seconds.<br>
+        <br>
+        <b>{AW}</b> - uses the AHK <a
+          href="https://www.autohotkey.com/docs/v1/lib/WinActivate.htm">WinActivate</a>
+        command. Activate an open Windows window. This command allows
+        you to jump to a window based on any text that appears in the
+        title bar of a window.&nbsp; To do this follow the {AW} command
+        with some text that matches text in the window title. The text
+        does not have to be the complete title, just any part of it. For
+        example, <b>{AW}Calc</b> will activate the Calculator app (if
+        it was open). Just be sure that the text is unique to the window
+        you hope to activate.<br>
+        <br>
+        <b>{WWA}</b> - uses the AHK <a
+          href="https://www.autohotkey.com/docs/v1/lib/WinWaitActive.htm">WinWaitActive</a>
+        command. Wait for window to become active before
+        proceeding.&nbsp; The {WWA} command can be followed by just a
+        part of the title to identify the window you are waiting for in
+        the same way as the {AW} command. You can use this command just
+        after running the {R} command to assure that your target window
+        is active before sending text to it as an alternative and
+        reliable way to using the {Sleep} + {AW}&nbsp; commands to do
+        the same thing.<br>
+        <br>
+        <b>{S}</b> - Suspend other GCW buttons until the macro for this
+        button has finished. Place this special command at the beginning
+        of your macro and it will prevent other macros from executing
+        concurrently.<br>
+        <br>
+        <b>{BEEP} </b>- Makes a short toot sound.<br>
+      </div>
+      <br>
+      <h4> GCW Commands for listing existing profiles and windows:</h4>
+      <div align="left"> <b>{LW}</b> - Displays a list of open windows.<br>
+        <br>
+        <b>{LP} </b>- Displays a list of your profiles.<br>
+        <div align="center">
+          <h4> GCW Specific Window Management</h4>
+        </div>
+        <b>{TJB}</b> - Opens the Test Joy Buttons window if it was
+        dismissed or minimized<br>
+        <br>
+        <b>{GCW}</b> - Brings the main GCW window into the foreground<br>
+      </div>
+      <h4> GCW Commands for Profile and Windows Navigation:</h4>
+      <b><a name="GP_"></a>{GP} </b>- Load a named profile where the
+      exact profile name appears directly after the {GP} command. For
+      example, <b>{GP}Game Controller Wedge</b> will load the default
+      profile. You could use this command to make a table of contents
+      profile that links to other profiles.<br>
+      <br>
+      <div align="left"> <b>{Home}</b> - Return to the default Game
+        Controller Wedge profile<br>
+      </div>
+      <br>
+      <div align="left"> <b>{NP}</b> - Loads the next profile on your
+        list in the order that is shown in the {LP} command<br>
+        <br>
+        <b>{NW} </b>- Brings the next open Windows window into the
+        foreground - ready to receive macros. This works, but not always
+        in the order you expect or hope for.<br>
+        <h4 align="center">Text to Speech Commands</h4>
+      </div>
+      <div align="left"><b>{TTS}</b> - Uses the system text-to-speech
+        service to speak any text that immediately follows the command -
+        like <b>{TTS}Hello, Bob.<br>
+          {TTSC}</b> - Uses system text-to-speech to speak text that was
+        copied to the system clipboard. <br>
+        <b>{TTS+}</b> - Raise the TTS voice volume by 10%<br>
+        <b>{TTS-}</b> - Lower the TTS voice volume by 10%<br>
+        <br>
+        The default system voice with its default settings is used. But,
+        those settings can be adjusted in the Windows Text-to-Speech
+        control panel.<br>
+      </div>
+      <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
+      <b> </b>
+      <h3> <a name="Combining_Commands_and_Macro_Strings"></a>Combining
+        Commands and Macro Strings!</h3>
+      You can combine special commands and macro strings in any of the
+      12 macro slots by separating the commands and/or macros with the
+      pipe character:<b> </b>|<br>
+      Commands and macro strings can be combined in any order, and you
+      can include as many as you want (I really don’t know for sure what
+      the limit is.) The actions will be carried out in left to right
+      order, triggered by a single button press.<br>
+      <br>
+      For example:<br>
+      <br>
+      <b>{S}|{R}Calc|{SLEEP}1000|{AW}Calc|55{+}66{enter}</b><br>
+      <br>
+      You can interpret this combo macro example as:<br>
+      First, it prevents other macros from interfering with this one.
+      Then it opens the Calculator app, waits 1 second, makes sure the
+      calculator window is active, and finally it requests the result of
+      55 + 66.<br>
+      <br>
+      Note that the + sign has to be enclosed in braces because it is
+      also a <i>special modifie</i>r character.<br>
+      <br>
+      <i><b>Add a comment to your macro!</b></i> - You could combine
+      macros as in: <b>^w|</b><b>{--Close browser tab}</b> This macro
+      closes the current browser tab and is followed by a pseudo command
+      that acts as a comment. In this case, the pseudo command is
+      ignored because it is not a known special command, special
+      character, or special modifier. The double minus sign is not used
+      in special commands and acts as a visual cue.<br>
+      <br>
+      <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
+      <h3><b><a name="Limitations__Contact"></a>Limitations / Contact</b></h3>
+      <b><a name="Why_GCWX"></a>Why do we need GCWX?</b><br>
+      <br>
+      &nbsp;I first developed GCW and GCW2 using wired, USB game
+      controllers which worked fine. But, when I tried an xinput
+      Bluetooth compliant game controller, like the XBox Adaptive
+      Controller, I discovered that macros would only execute if the
+      main GCW window was in focus. This is not the case with wired
+      controllers, and it is not acceptable. After a little digging, I
+      found a wrapper script for AHK that would handle xinput device
+      interactions here: <a
+        href="https://www.autohotkey.com/boards/viewtopic.php?f=6&amp;t=29659">https://www.autohotkey.com/boards/viewtopic.php?f=6&amp;t=29659</a>
+      - thanks to Lexicos. This strategy requires 2 scripts running
+      simultaneously - one non-GUI script to check for xinput game
+      controller button presses which then sends that data to the other
+      script, a modified GCW script. The xinput detection script is
+      launched automatically when you run GCWX.ahk. When you exit GCWX
+      the xinput detection script is also closed.<br>
+      The result is that the 2 scripts assure that GCWX can respond even
+      if both GCWX windows are hidden. <br>
+      <br>
+      So, to use GCWX, connect to your Bluetooth controller first, then
+      run GCWX.ahk. <br>
+      <br>
+      GCWX and AutoHotkey can emulate keyboard and mouse actions and
+      send them to most active windows, or to the Windows operating
+      system. But there are applications that it will not be able to
+      interact with at all, or not very well.<br>
+      <br>
+      In particular, in Windows 11 the new Notepad behaves really
+      weirdly. If you send text to it from GCWX or other AutoHotKey
+      scripts, it frequently misses some of the sent characters. This is
+      a quirk in Notepad I believe is related to the AI functions it now
+      offers. I believe the AI function periodically interrupts the
+      stream of inputs from AutoHotKey to Notepad. You can always
+      download any one of the many Notepad alternatives to test your
+      GCWX macros.<br>
+      <br>
+      Also, I was unable to use the {click} command to reactivate Voice
+      Access in Windows 11 in “Microphone off” mode. Nor would GCW
+      respond at all while Voice Access was “Listening”. It seems that
+      Voice Access will totally preempt GCW (and AutoHotKey). <a
+        href="https://www.autohotkey.com/boards/viewtopic.php?t=99531">You
+
+
+
+
+
+
+
+
+
+
+
+
+
+        can find out more at this AutoHotKey community post if you are
+        having issues controlling or sending something to a window with
+        GCW</a>.<br>
+      <br>
+      You can contact me at:<br>
+      <br>
+      j a m j o l u @ g m a i l . c o m<br>
+      <br>
+      (remove the spaces) and I will attempt to suggest a solution or
+      workaround. I also welcome comments or suggestions.<br>
+      <br>
+      <br>
+      <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
+      <h3> <a name="How_can_I_get_GCW"></a>How can I get GCWX?</h3>
+      GCWX and GCW are available from the same github site.<br>
+      Go to the Github page: <a
+        href="https://github.com/jamjolu/Game-Controller-Wedge">https://github.com/jamjolu/Game-Controller-Wedge</a><br>
+      Click the green “<b>Code</b>” button.<br>
+      Click the “<b>Download ZIP</b>” option<br>
+      Once downloaded, <b>extract the zip file</b> (right-click and
+      choose “Extract all”.)<br>
+      Look inside the folder “<b>Game Controller Wedge-main</b>”.<br>
+      Copy the inner folder “<b>Game Controller Wedge-main</b>” and
+      paste it wherever you like.<br>
+      Inside the inner Game Controller Wedge-main folder you will find
+      the GCWX.ahk script. <br>
+      <br>
+      GCWX does not have an executable standalone like GCW and GCW2. So,
+      you will also need to download the AutoHotkey V1.1 installer from
+      <a href="https://www.autohotkey.com/">https://www.autohotkey.com/
+      </a><br>
+      Once downloaded, open the installer. Then choose the <b>Express
+        installation</b>.<br>
+      After that, you can double-click&nbsp; the <b>GCWX.ahk</b> or <b>any
+
+
+
+        other .ahk file to run it.<br>
+        <br>
+      </b> <b><i>Always keep everything in the Game Controller
+          Wedge-main folder together.</i></b><br>
+      <h3> <a href="#Table_of_Contents:">Return to Table of contents</a></h3>
+    </div>
+  </body>
+</html>
